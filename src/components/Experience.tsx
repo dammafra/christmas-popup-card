@@ -13,7 +13,7 @@ export function Experience() {
         fov: 45,
         near: 0.1,
         far: 100,
-        position: [2, 6, 8],
+        position: [2, 4, 8],
       }}
     >
       <Environment />
@@ -25,8 +25,9 @@ export function Experience() {
         minDistance={5}
         maxDistance={15}
         maxPolarAngle={MathUtils.degToRad(70)}
-        panSpeed={0}
         autoRotateSpeed={-0.5}
+        target={[0, 1, 0]}
+        screenSpacePanning={false}
       />
 
       <World />
