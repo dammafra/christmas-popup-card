@@ -9,8 +9,8 @@ export function Helpers() {
   const { grid, axes, gizmo } = useControls(
     'helpers',
     {
-      grid: debug,
-      axes: debug,
+      grid: false,
+      axes: false,
       gizmo: debug,
     },
     { order: 3, collapsed: true },
