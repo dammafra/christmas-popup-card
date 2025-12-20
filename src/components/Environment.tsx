@@ -34,7 +34,7 @@ export function Environment() {
   useEffect(() => {
     if (!helperRef.current) return
     helperRef.current.visible = helpers
-  }, [helpers])
+  }, [helpers, helperRef])
 
   return (
     <>

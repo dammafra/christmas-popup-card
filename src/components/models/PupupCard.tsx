@@ -1,14 +1,24 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
-import { useEffect, type JSX } from 'react'
-import { AnimationAction, AnimationClip, LoopOnce, Mesh, MeshStandardMaterial } from 'three'
-
-type ActionName = 'open'
-type GLTFActions = Record<ActionName, AnimationAction>
+import { useCallback, useEffect, useRef, useState, type JSX } from 'react'
+import { AnimationClip, LoopOnce, Mesh, MeshStandardMaterial } from 'three'
 
 export function PopupCard(props: JSX.IntrinsicElements['group']) {
   const { scene, animations } = useGLTF('/models/popup-card.glb')
-  const animationClips = useAnimations<AnimationClip>(animations, scene)
-  const actions = animationClips.actions as GLTFActions
+  const { actions } = useAnimations<AnimationClip>(animations, scene)
+  const openAction = useRef(actions.open!)
+
+  const [isOpen, setIsOpen] = useState(true)
+
+  const toggle = useCallback(() => {
+    if (openAction.current.isRunning()) return
+
+    openAction.current.reset()
+    openAction.current.timeScale *= -1
+    openAction.current.time = isOpen ? openAction.current.getClip().duration : 0
+    openAction.current.play()
+
+    setIsOpen(!isOpen)
+  }, [isOpen])
 
   useEffect(() => {
     scene.traverse(obj => {
@@ -18,22 +28,22 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
             ? obj.name.includes('Big')
               ? 'green'
               : 'limegreen'
-            : 'red',
+            : obj.name.includes('presents')
+              ? 'gold'
+              : 'red',
         })
         obj.castShadow = true
         obj.receiveShadow = true
       }
     })
 
-    const action = actions.open
-    action.reset()
-    action.setLoop(LoopOnce, 1)
-    action.clampWhenFinished = true
-    action.timeScale = 2
-    action.play()
+    openAction.current.setLoop(LoopOnce, 1)
+    openAction.current.clampWhenFinished = true
+    openAction.current.timeScale = 2
+    openAction.current.play()
   }, [scene])
 
-  return <primitive object={scene} {...props} dispose={null} />
+  return <primitive object={scene} {...props} dispose={null} onClick={toggle} />
 }
 
 useGLTF.preload('/models/popup-card.glb')

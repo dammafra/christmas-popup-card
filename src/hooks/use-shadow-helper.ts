@@ -20,7 +20,7 @@ export function useShadowHelper(ref: RefObject<Light | null>) {
     return () => {
       scene.remove(helper)
     }
-  }, [])
+  }, [ref, scene])
 
   useFrame(() => {
     if (!helperRef.current) return

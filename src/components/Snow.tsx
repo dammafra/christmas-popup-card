@@ -1,6 +1,6 @@
 import { useTexture } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useMemo, useRef } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { DoubleSide, InstancedMesh, MathUtils, Object3D } from 'three'
 
 type Particle = {
@@ -31,35 +31,33 @@ export function Snow({ count = 500 }: SnowProps) {
   const texture = useTexture('/textures/snowflake.png')
   const dummy = useMemo(() => new Object3D(), [])
 
-  const particles: Particle[] = useMemo(
-    () =>
-      Array.from({ length: count }, () => {
-        const scale = MathUtils.randFloat(0.4, 1.8)
+  const [particles] = useState<Particle[]>(() =>
+    Array.from({ length: count }, () => {
+      const scale = MathUtils.randFloat(0.4, 1.8)
 
-        //  speed based on dimension: larger flakes fall faster, smaller flakes fall slower
-        const baseSpeed = Math.random() * 0.2 + 0.1
-        const speed = baseSpeed * (scale * 0.5 + 0.5)
+      //  speed based on dimension: larger flakes fall faster, smaller flakes fall slower
+      const baseSpeed = Math.random() * 0.2 + 0.1
+      const speed = baseSpeed * (scale * 0.5 + 0.5)
 
-        return {
-          x: Math.random() * 20 - 10,
-          y: Math.random() * 20 - 10,
-          z: Math.random() * 20 - 10,
+      return {
+        x: Math.random() * 20 - 10,
+        y: Math.random() * 20 - 10,
+        z: Math.random() * 20 - 10,
 
-          speed,
-          scale,
+        speed,
+        scale,
 
-          rotationX: Math.random() * Math.PI * 2,
-          rotationY: Math.random() * Math.PI * 2,
-          rotationZ: Math.random() * Math.PI * 2,
-          spinSpeedX: (Math.random() - 0.5) * 2.5,
-          spinSpeedZ: (Math.random() - 0.5) * 5,
+        rotationX: Math.random() * Math.PI * 2,
+        rotationY: Math.random() * Math.PI * 2,
+        rotationZ: Math.random() * Math.PI * 2,
+        spinSpeedX: (Math.random() - 0.5) * 2.5,
+        spinSpeedZ: (Math.random() - 0.5) * 5,
 
-          swayPhase: Math.random() * Math.PI * 2,
-          swayFreq: Math.random() * 2 + 0.5,
-          swayAmp: Math.random() * 0.2,
-        }
-      }),
-    [count],
+        swayPhase: Math.random() * Math.PI * 2,
+        swayFreq: Math.random() * 2 + 0.5,
+        swayAmp: Math.random() * 0.2,
+      }
+    }),
   )
 
   useFrame((state, delta) => {
