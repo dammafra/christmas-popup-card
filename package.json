@@ -23,7 +23,7 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "tailwindcss": "^4.1.18",
-    "three": "^0.180.0",
+    "three": "^0.182.0",
     "zustand": "^5.0.9"
   },
   "devDependencies": {
@@ -44,7 +44,7 @@
   },
   "overrides": {
     "@react-three/xr": {
-      "three": "0.180.0"
+      "three": "0.182.0"
     }
   }
 }

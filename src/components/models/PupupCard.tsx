@@ -32,6 +32,7 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
               ? 'gold'
               : 'red',
         })
+
         obj.castShadow = true
         obj.receiveShadow = true
       }

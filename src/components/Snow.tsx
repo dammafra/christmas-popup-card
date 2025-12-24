@@ -41,7 +41,7 @@ export function Snow({ count = 500 }: SnowProps) {
 
       return {
         x: Math.random() * 20 - 10,
-        y: Math.random() * 20 - 10,
+        y: Math.random() * 20 + 5,
         z: Math.random() * 20 - 10,
 
         speed,
