@@ -27,18 +27,6 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
 
       obj.castShadow = true
       obj.receiveShadow = true
-
-      if (obj.name.includes('cover') || obj.name.includes('tree')) return
-
-      obj.material = new MeshStandardMaterial({
-        color: obj.name.includes('tree')
-          ? obj.name.includes('Big')
-            ? 'limegreen'
-            : 'green'
-          : obj.name.includes('presents')
-            ? 'gold'
-            : 'red',
-      })
     })
 
     openAction.current.setLoop(LoopOnce, 1)
