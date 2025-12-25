@@ -1,5 +1,7 @@
 import { Canvas, Helpers } from '@components/helpers'
 import { OrbitControls } from '@react-three/drei'
+import { Bloom, DepthOfField, EffectComposer, Vignette } from '@react-three/postprocessing'
+import { KernelSize } from 'postprocessing'
 import { AgXToneMapping, MathUtils, PCFShadowMap } from 'three'
 import { Environment } from './Environment'
 import { World } from './World'
@@ -32,6 +34,16 @@ export function Experience() {
 
       <World />
       <Helpers />
+
+      <EffectComposer resolutionScale={0.75}>
+        <DepthOfField focusDistance={0.32} focalLength={0.018} bokehScale={1.2} />
+        <Bloom
+          luminanceThreshold={1}
+          luminanceSmoothing={0.025}
+          kernelSize={KernelSize.VERY_SMALL}
+        />
+        <Vignette offset={0.1} darkness={1.1} />
+      </EffectComposer>
     </Canvas>
   )
 }
