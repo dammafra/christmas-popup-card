@@ -1,4 +1,5 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
+import { useFrame } from '@react-three/fiber'
 import { useCallback, useEffect, useRef, useState, type JSX } from 'react'
 import { AnimationClip, LoopOnce, Mesh, MeshStandardMaterial } from 'three'
 
@@ -22,20 +23,22 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
 
   useEffect(() => {
     scene.traverse(obj => {
-      if (obj instanceof Mesh) {
-        obj.material = new MeshStandardMaterial({
-          color: obj.name.includes('tree')
-            ? obj.name.includes('Big')
-              ? 'green'
-              : 'limegreen'
-            : obj.name.includes('presents')
-              ? 'gold'
-              : 'red',
-        })
+      if (!(obj instanceof Mesh)) return
 
-        obj.castShadow = true
-        obj.receiveShadow = true
-      }
+      obj.castShadow = true
+      obj.receiveShadow = true
+
+      if (obj.name.includes('cover') || obj.name.includes('tree')) return
+
+      obj.material = new MeshStandardMaterial({
+        color: obj.name.includes('tree')
+          ? obj.name.includes('Big')
+            ? 'limegreen'
+            : 'green'
+          : obj.name.includes('presents')
+            ? 'gold'
+            : 'red',
+      })
     })
 
     openAction.current.setLoop(LoopOnce, 1)
@@ -43,6 +46,16 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
     openAction.current.timeScale = 2
     openAction.current.play()
   }, [scene])
+
+  useFrame(({ clock }) => {
+    scene.traverse(obj => {
+      if (!(obj instanceof Mesh) || !obj.name.includes('tree')) return
+
+      const material = obj.material as MeshStandardMaterial
+      material.emissive.set('gold')
+      material.emissiveIntensity = 2.5 + 2.5 * Math.sin(clock.elapsedTime * 2)
+    })
+  })
 
   return <primitive object={scene} {...props} dispose={null} onClick={toggle} />
 }
