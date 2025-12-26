@@ -1,6 +1,6 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
 import { useFrame } from '@react-three/fiber'
-import { useCallback, useEffect, useRef, useState, type JSX } from 'react'
+import { useEffect, useRef, type JSX } from 'react'
 import { AnimationClip, LoopOnce, Mesh, MeshStandardMaterial } from 'three'
 
 export function PopupCard(props: JSX.IntrinsicElements['group']) {
@@ -9,18 +9,18 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
   const openAction = useRef(actions.open!)
   const bounceAction = useRef(actions.bounce!)
 
-  const [isOpen, setIsOpen] = useState(true)
+  // const [isOpen, setIsOpen] = useState(true)
 
-  const toggle = useCallback(() => {
-    if (openAction.current.isRunning()) return
+  // const toggle = useCallback(() => {
+  //   if (openAction.current.isRunning()) return
 
-    openAction.current.reset()
-    openAction.current.timeScale *= -1
-    openAction.current.time = isOpen ? openAction.current.getClip().duration : 0
-    openAction.current.play()
+  //   openAction.current.reset()
+  //   openAction.current.timeScale *= -1
+  //   openAction.current.time = isOpen ? openAction.current.getClip().duration : 0
+  //   openAction.current.play()
 
-    setIsOpen(!isOpen)
-  }, [isOpen])
+  //   setIsOpen(!isOpen)
+  // }, [isOpen])
 
   useEffect(() => {
     scene.traverse(obj => {
