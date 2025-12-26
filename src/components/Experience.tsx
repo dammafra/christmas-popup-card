@@ -37,12 +37,12 @@ export function Experience() {
 
       <EffectComposer resolutionScale={0.5} multisampling={0}>
         <Bloom
-          intensity={2}
+          intensity={0.5}
           luminanceThreshold={1.5}
           luminanceSmoothing={0.2}
           kernelSize={KernelSize.SMALL}
         />
-        <DepthOfField focusDistance={0.32} focalLength={0.018} bokehScale={1.1} />
+        <DepthOfField focusDistance={0.32} focalLength={0.018} bokehScale={0.8} />
         <ToneMapping mode={ToneMappingMode.UNCHARTED2} />
       </EffectComposer>
     </Canvas>
