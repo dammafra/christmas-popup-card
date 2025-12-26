@@ -1,5 +1,4 @@
 import { useShadowHelper } from '@hooks'
-import { SpotLight } from '@react-three/drei'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
 import { SpotLight as ThreeSpotLight, Vector3 } from 'three'
@@ -17,7 +16,7 @@ export function Environment() {
         label: 'ambient intensity',
       },
       lightIntensity: {
-        value: 8,
+        value: 10,
         min: 0,
         max: 20,
         step: 0.01,
@@ -45,15 +44,17 @@ export function Environment() {
 
   return (
     <>
-      <SpotLight
+      {/* <SpotLight
         color={color}
         castShadow={false}
         position={lightPosition}
-        distance={20}
-        attenuation={13.5}
+        distance={30}
+        attenuation={20}
         radiusTop={2}
         radiusBottom={5}
-      />
+        volumetric
+        opacity={0.7}
+      /> */}
 
       <directionalLight
         ref={lightRef}
@@ -68,7 +69,7 @@ export function Environment() {
       />
 
       <ambientLight intensity={ambientLightIntensity} />
-      <fogExp2 attach="fog" args={['#0f172b', 0.05]} />
+      {/* <fogExp2 attach="fog" args={['black', 0.06]} /> */}
     </>
   )
 }

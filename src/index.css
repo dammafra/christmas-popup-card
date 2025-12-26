@@ -3,5 +3,5 @@
 html,
 body,
 #root {
-  @apply fixed inset-0 overflow-hidden bg-radial from-amber-900 to-70% to-black;
+  @apply fixed inset-0 overflow-hidden bg-black;
 }

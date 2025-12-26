@@ -66,7 +66,7 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
     })
   })
 
-  return <primitive object={scene} {...props} dispose={null} onDoubleClick={toggle} />
+  return <primitive object={scene} {...props} dispose={null} onClick={toggle} />
 }
 
 useGLTF.preload('/models/popup-card.glb')

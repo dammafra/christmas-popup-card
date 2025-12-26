@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import { Glow } from './Glow'
 import { Snow } from './Snow'
 import { PopupCard } from './models'
 
@@ -15,6 +16,8 @@ export function World() {
       >
         <PopupCard />
       </Suspense>
+
+      <Glow />
       <Snow />
     </>
   )
