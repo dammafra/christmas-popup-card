@@ -42,7 +42,7 @@ export function Experience() {
           luminanceSmoothing={0.2}
           kernelSize={KernelSize.SMALL}
         />
-        <DepthOfField focusDistance={0.32} focalLength={0.018} bokehScale={1.5} />
+        <DepthOfField focusDistance={0.32} focalLength={0.018} bokehScale={1.1} />
         <ToneMapping mode={ToneMappingMode.UNCHARTED2} />
       </EffectComposer>
     </Canvas>
