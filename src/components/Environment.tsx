@@ -43,7 +43,7 @@ export function Environment() {
         castShadow={false}
         position={lightPosition}
         distance={20}
-        attenuation={15}
+        attenuation={13.5}
         radiusTop={2}
         radiusBottom={5}
       />

@@ -24,7 +24,7 @@ export function Experience() {
         makeDefault
         autoRotate
         enableDamping
-        minDistance={6}
+        minDistance={4}
         maxDistance={15}
         maxPolarAngle={MathUtils.degToRad(90)}
         autoRotateSpeed={-0.5}
@@ -36,12 +36,8 @@ export function Experience() {
       <Helpers />
 
       <EffectComposer resolutionScale={0.75}>
-        <DepthOfField focusDistance={0.32} focalLength={0.018} bokehScale={1.2} />
-        <Bloom
-          luminanceThreshold={1}
-          luminanceSmoothing={0.025}
-          kernelSize={KernelSize.VERY_SMALL}
-        />
+        <DepthOfField focusDistance={0.32} focalLength={0.018} bokehScale={1.5} />
+        <Bloom luminanceThreshold={1} kernelSize={KernelSize.VERY_SMALL} />
         <Vignette offset={0.1} darkness={1.1} />
       </EffectComposer>
     </Canvas>

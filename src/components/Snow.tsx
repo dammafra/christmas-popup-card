@@ -26,7 +26,7 @@ interface SnowProps {
   count?: number
 }
 
-export function Snow({ count = 500 }: SnowProps) {
+export function Snow({ count = 300 }: SnowProps) {
   const mesh = useRef<InstancedMesh>(null!)
   const texture = useTexture('/textures/snowflake.png')
   const dummy = useMemo(() => new Object3D(), [])
