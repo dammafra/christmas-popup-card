@@ -5,16 +5,23 @@ import { useEffect, useRef } from 'react'
 import { SpotLight as ThreeSpotLight, Vector3 } from 'three'
 
 export function Environment() {
-  const { helpers, ambientLightIntensity, lightPosition, color } = useControls(
+  const { helpers, ambientLightIntensity, lightIntensity, lightPosition, color } = useControls(
     'environment',
     {
       helpers: false,
       ambientLightIntensity: {
-        value: 0.5,
+        value: 1,
         min: 0,
         max: 20,
         step: 0.01,
         label: 'ambient intensity',
+      },
+      lightIntensity: {
+        value: 8,
+        min: 0,
+        max: 20,
+        step: 0.01,
+        label: 'light intensity',
       },
       lightPosition: {
         value: [-8, 10, -6],
@@ -52,7 +59,7 @@ export function Environment() {
         ref={lightRef}
         color={color}
         castShadow
-        intensity={5}
+        intensity={lightIntensity}
         position={new Vector3().fromArray(lightPosition).multiplyScalar(0.5)}
         shadow-mapSize={[1024, 1024]}
         shadow-radius={8}

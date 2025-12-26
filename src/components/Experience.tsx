@@ -1,8 +1,8 @@
 import { Canvas, Helpers } from '@components/helpers'
 import { OrbitControls } from '@react-three/drei'
-import { Bloom, DepthOfField, EffectComposer, Vignette } from '@react-three/postprocessing'
-import { KernelSize } from 'postprocessing'
-import { AgXToneMapping, MathUtils, PCFShadowMap } from 'three'
+import { Bloom, DepthOfField, EffectComposer, ToneMapping } from '@react-three/postprocessing'
+import { KernelSize, ToneMappingMode } from 'postprocessing'
+import { MathUtils, NoToneMapping, PCFShadowMap } from 'three'
 import { Environment } from './Environment'
 import { World } from './World'
 
@@ -10,7 +10,7 @@ export function Experience() {
   return (
     <Canvas
       shadows={{ type: PCFShadowMap }}
-      gl={{ toneMapping: AgXToneMapping }}
+      gl={{ toneMapping: NoToneMapping }}
       camera={{
         fov: 45,
         near: 0.1,
@@ -35,10 +35,15 @@ export function Experience() {
       <World />
       <Helpers />
 
-      <EffectComposer resolutionScale={0.75}>
+      <EffectComposer resolutionScale={0.5} multisampling={0}>
+        <Bloom
+          intensity={10}
+          luminanceThreshold={1.5}
+          luminanceSmoothing={0.2}
+          kernelSize={KernelSize.SMALL}
+        />
         <DepthOfField focusDistance={0.32} focalLength={0.018} bokehScale={1.5} />
-        <Bloom luminanceThreshold={1} kernelSize={KernelSize.VERY_SMALL} />
-        <Vignette offset={0.1} darkness={1.1} />
+        <ToneMapping mode={ToneMappingMode.UNCHARTED2} />
       </EffectComposer>
     </Canvas>
   )
