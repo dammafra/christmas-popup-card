@@ -37,7 +37,7 @@ export function Experience() {
 
       <EffectComposer resolutionScale={0.5} multisampling={0}>
         <Bloom
-          intensity={10}
+          intensity={2}
           luminanceThreshold={1.5}
           luminanceSmoothing={0.2}
           kernelSize={KernelSize.SMALL}
