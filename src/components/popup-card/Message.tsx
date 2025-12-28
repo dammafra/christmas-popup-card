@@ -11,7 +11,7 @@ export function Message() {
     phase >= Phase.MESSAGE && (
       <HandwrittenText
         position={[3.4, -0.02, -2.25]}
-        lineWidth={0.01}
+        lineWidth={0.015}
         scale={0.2}
         maxWidth={10}
         speed={4}

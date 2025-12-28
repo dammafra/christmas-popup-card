@@ -10,9 +10,10 @@ import { Glow } from './Glow'
 import { Message } from './Message'
 
 export function PopupCard(props: JSX.IntrinsicElements['group']) {
-  const phase = useDirection(s => s.phase)
   const setPhase = useDirection(s => s.setPhase)
-  const [isOpen, setIsOpen] = useState(false)
+
+  const openTrigger = useDirection(s => s.open)
+  const [internalOpen, setInternalOpen] = useState(false)
 
   const { scene, animations } = useGLTF('/models/popup-card.glb')
   const { actions } = useAnimations<AnimationClip>(animations, scene)
@@ -37,7 +38,7 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
   }, [])
 
   const open = useCallback(() => {
-    if (isOpen || openAction.current.isRunning()) return
+    if (internalOpen || openAction.current.isRunning()) return
 
     clearTimeout(bounceTimeout.current)
     openAction.current.reset()
@@ -48,11 +49,11 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
     openAction.current.play()
 
     scheduleBounce()
-    setIsOpen(true)
-  }, [isOpen, scheduleBounce])
+    setInternalOpen(true)
+  }, [internalOpen, scheduleBounce])
 
   const close = useCallback(() => {
-    if (!isOpen || openAction.current.isRunning()) return
+    if (!internalOpen || openAction.current.isRunning()) return
 
     clearTimeout(bounceTimeout.current)
     openAction.current.reset()
@@ -62,16 +63,17 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
     openAction.current.time = openAction.current.getClip().duration
     openAction.current.play()
 
-    setIsOpen(false)
-  }, [isOpen])
+    setInternalOpen(false)
+  }, [internalOpen])
 
   useEffect(() => {
-    setPhase(Phase.READY)
+    setPhase(Phase.DEDICATION)
   }, [setPhase])
 
   useEffect(() => {
-    if (phase === Phase.OPEN) open()
-  }, [phase, open])
+    if (openTrigger) open()
+    else close()
+  }, [openTrigger, open])
 
   useEffect(() => {
     scene.traverse(obj => {
@@ -105,22 +107,14 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
 
   return (
     <>
-      <primitive
-        object={scene}
-        {...props}
-        dispose={null}
-        onClick={() => {
-          if (phase < Phase.END) return
-          isOpen ? close() : open()
-        }}
-      />
+      <primitive object={scene} {...props} dispose={null} />
 
       <group ref={coverRef}>
         <Dedication />
         <Message />
       </group>
 
-      <Glow show={isOpen} />
+      <Glow show={internalOpen} />
     </>
   )
 }

@@ -1,7 +1,7 @@
 import { CameraControls, type CameraControlsImpl } from '@react-three/drei'
 import { useThree } from '@react-three/fiber'
 import { useEffect } from 'react'
-import { MathUtils } from 'three'
+import { Box3, MathUtils, Vector3 } from 'three'
 
 import { useDebug } from '@hooks'
 import { Phase, useDirection } from '@stores'
@@ -12,6 +12,7 @@ export function CameraRig() {
 
   const phase = useDirection(s => s.phase)
   const setPhase = useDirection(s => s.setPhase)
+  const toggleOpen = useDirection(s => s.toggleOpen)
 
   useEffect(() => {
     const cameraControls = controls as CameraControlsImpl
@@ -19,6 +20,7 @@ export function CameraRig() {
 
     switch (phase) {
       case Phase.LOADING:
+      case Phase.DEDICATION:
       case Phase.READY:
         cameraControls.moveTo(0, viewport.aspect < 1 ? 1.5 : 0, 0, true)
         break
@@ -38,7 +40,7 @@ export function CameraRig() {
             .then(() => setPhase(Phase.MESSAGE))
         })
 
-        setTimeout(() => setPhase(Phase.OPEN), 2500)
+        setTimeout(toggleOpen, 2500)
         break
 
       case Phase.END:
@@ -50,7 +52,7 @@ export function CameraRig() {
           cameraControls.smoothTime = 0.25
           cameraControls.minDistance = 2
           cameraControls.maxDistance = 15
-          cameraControls.truckSpeed = 0
+          cameraControls.setBoundary(new Box3(new Vector3(-3, 0, -3), new Vector3(3, 1, 0)))
           cameraControls.enabled = true
         })
 

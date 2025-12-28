@@ -36,7 +36,7 @@ export function Loading() {
           <HandwrittenText
             position-y={0.05}
             rotation-x={MathUtils.degToRad(-90)}
-            lineWidth={0.01}
+            lineWidth={0.015}
             scale={0.2}
             speed={speed}
             center

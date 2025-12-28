@@ -97,7 +97,7 @@ export function Snow({ count = 300 }: SnowProps) {
   })
 
   return (
-    phase >= Phase.OPEN && (
+    phase >= Phase.OPENING && (
       <instancedMesh ref={mesh} args={[undefined, undefined, count]} frustumCulled={false}>
         <planeGeometry args={[0.1, 0.1]} />
         <meshBasicMaterial
