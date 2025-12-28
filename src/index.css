@@ -1,5 +1,14 @@
 @import 'tailwindcss';
 
+@font-face {
+  font-family: 'Satisfy';
+  src: url('/fonts/satisfy.ttf');
+}
+
+@utility font-satisfy {
+  font-family: 'Satisfy';
+}
+
 html,
 body,
 #root {
