@@ -1,7 +1,8 @@
-import { useDebug } from '@hooks'
 import { GizmoHelper, GizmoViewport } from '@react-three/drei'
 import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
+
+import { useDebug } from '@hooks'
 
 export function Helpers() {
   const debug = useDebug()
@@ -22,7 +23,7 @@ export function Helpers() {
       {grid && <gridHelper args={[10, 10, 'red', 'gray']} position-y={-0.002} />}
 
       {gizmo && (
-        <GizmoHelper>
+        <GizmoHelper renderPriority={999}>
           <GizmoViewport labelColor="white" />
         </GizmoHelper>
       )}

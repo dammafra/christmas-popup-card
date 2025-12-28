@@ -1,9 +1,13 @@
+import { Suspense } from 'react'
+import { NoToneMapping, PCFShadowMap } from 'three'
+
 import { Canvas, Helpers } from '@components/helpers'
-import { OrbitControls } from '@react-three/drei'
-import { MathUtils, NoToneMapping, PCFShadowMap } from 'three'
+import { PopupCard } from '@components/popup-card'
+
+import { CameraRig } from './CameraRig'
 import { Environment } from './Environment'
+import { Loading } from './Loading'
 import { PostProcessing } from './PostProcessing'
-import { World } from './World'
 
 export function Experience() {
   return (
@@ -14,26 +18,18 @@ export function Experience() {
         fov: 45,
         near: 0.1,
         far: 100,
-        position: [2, 4, 8],
+        position: [0, 2, 0],
       }}
     >
+      <CameraRig />
       <Environment />
 
-      <OrbitControls
-        makeDefault
-        autoRotate
-        enableDamping
-        minDistance={4}
-        maxDistance={15}
-        maxPolarAngle={MathUtils.degToRad(90)}
-        autoRotateSpeed={-0.5}
-        target={[0, 1, 0]}
-        screenSpacePanning={false}
-      />
+      <Loading />
+      <Suspense>
+        <PopupCard />
+      </Suspense>
 
-      <World />
       <Helpers />
-
       <PostProcessing />
     </Canvas>
   )

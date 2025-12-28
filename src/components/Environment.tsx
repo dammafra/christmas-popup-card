@@ -1,7 +1,10 @@
-import { useShadowHelper } from '@hooks'
 import { useControls } from 'leva'
 import { useEffect, useRef } from 'react'
 import { SpotLight as ThreeSpotLight, Vector3 } from 'three'
+
+import { useShadowHelper } from '@hooks'
+
+import { Snow } from './Snow'
 
 export function Environment() {
   const { helpers, ambientLightIntensity, lightIntensity, lightPosition, color } = useControls(
@@ -70,6 +73,8 @@ export function Environment() {
 
       <ambientLight intensity={ambientLightIntensity} />
       {/* <fogExp2 attach="fog" args={['black', 0.06]} /> */}
+
+      <Snow />
     </>
   )
 }

@@ -3,6 +3,8 @@ import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef, useState } from 'react'
 import { DoubleSide, InstancedMesh, MathUtils, Object3D } from 'three'
 
+import { Phase, useDirection } from '@stores'
+
 type Particle = {
   x: number
   y: number
@@ -27,6 +29,8 @@ interface SnowProps {
 }
 
 export function Snow({ count = 300 }: SnowProps) {
+  const phase = useDirection(s => s.phase)
+
   const mesh = useRef<InstancedMesh>(null!)
   const texture = useTexture('/textures/snowflake.png')
   const dummy = useMemo(() => new Object3D(), [])
@@ -93,17 +97,19 @@ export function Snow({ count = 300 }: SnowProps) {
   })
 
   return (
-    <instancedMesh ref={mesh} args={[undefined, undefined, count]} frustumCulled={false}>
-      <planeGeometry args={[0.1, 0.1]} />
-      <meshBasicMaterial
-        map={texture}
-        alphaMap={texture}
-        transparent
-        depthWrite={false}
-        opacity={0.8}
-        side={DoubleSide}
-      />
-    </instancedMesh>
+    phase >= Phase.OPEN && (
+      <instancedMesh ref={mesh} args={[undefined, undefined, count]} frustumCulled={false}>
+        <planeGeometry args={[0.1, 0.1]} />
+        <meshBasicMaterial
+          map={texture}
+          alphaMap={texture}
+          transparent
+          depthWrite={false}
+          opacity={0.8}
+          side={DoubleSide}
+        />
+      </instancedMesh>
+    )
   )
 }
 

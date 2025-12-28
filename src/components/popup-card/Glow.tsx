@@ -1,8 +1,16 @@
 import { a, useSpring } from '@react-spring/three'
 import { Billboard, GradientTexture, GradientType } from '@react-three/drei'
 
-export function Glow() {
-  const { opacity } = useSpring({ from: { opacity: 0 }, to: { opacity: 0.8 }, delay: 1500 })
+interface GlowProps {
+  show: boolean
+}
+
+export function Glow({ show }: GlowProps) {
+  const { opacity } = useSpring({
+    from: { opacity: show ? 0 : 0.8 },
+    to: { opacity: show ? 0.8 : 0 },
+    delay: show ? 1500 : 0,
+  })
 
   return (
     <Billboard>

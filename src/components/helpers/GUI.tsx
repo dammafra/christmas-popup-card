@@ -1,6 +1,7 @@
-import { useDebug } from '@hooks'
 import clsx from 'clsx'
 import { Leva } from 'leva'
+
+import { useDebug } from '@hooks'
 
 export function GUI() {
   const debug = useDebug()
