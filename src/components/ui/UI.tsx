@@ -43,7 +43,12 @@ export function UI() {
   const innerMenuTransition = useTransition(editMode, transitionConfig)
 
   const share = async () => {
-    const query = btoa(JSON.stringify({ dedication, message }))
+    const query = btoa(
+      JSON.stringify({
+        dedication: encodeURIComponent(dedication),
+        message: encodeURIComponent(message),
+      }),
+    )
 
     const url = `${location.protocol}//${location.host}?${query}`
     const toShare = { text: url }
