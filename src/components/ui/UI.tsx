@@ -66,7 +66,7 @@ export function UI() {
         (spring, show) =>
           show && (
             <Button
-              className="absolute! bottom-30 left-1/2 -translate-x-1/2 px-6 py-4 text-5xl"
+              className="absolute! bottom-4 left-1/2 -translate-x-1/2 px-6 py-2 text-2xl"
               style={spring}
               onClick={() => setPhase(Phase.OPENING)}
             >
