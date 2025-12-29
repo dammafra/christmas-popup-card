@@ -6,7 +6,7 @@ export const TextArea = animated(({ className, ...props }: JSX.IntrinsicElements
   return (
     <a.textarea
       className={clsx(
-        'border-b border-white outline-none ring-0 bg-white/20 font-satisfy resize-none leading-4 py-2 caret-white overflow-hidden',
+        'border-b border-white outline-none ring-0 bg-white/20 font-satisfy resize-none leading-4 py-2 caret-white overflow-hidden placeholder:text-[8px] placeholder:text-gray-50 placeholder:opacity-50',
         className,
       )}
       {...props}

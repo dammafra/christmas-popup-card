@@ -40,6 +40,7 @@ export function UI() {
     ...transitionConfig,
     delay: 3500,
   })
+  const innerMenuTransition = useTransition(editMode, transitionConfig)
 
   const share = async () => {
     const query = btoa(JSON.stringify({ dedication, message }))
@@ -86,57 +87,52 @@ export function UI() {
         (spring, show) =>
           show && (
             <a.div className="absolute inset-4" style={spring}>
-              <div className="flex flex-col justify-between absolute top-0 h-full">
-                <div className="w-fit flex flex-col gap-2">
-                  {editMode ? (
-                    <>
-                      <Button onClick={() => setEditMode(false)}>Back</Button>
-                      <Button
-                        onClick={() => setFocus('dedication')}
-                        disabled={editFocus === 'dedication'}
-                      >
-                        Edit Dedication
-                      </Button>
-                      <Button
-                        onClick={() => setFocus('message')}
-                        disabled={editFocus === 'message'}
-                      >
-                        Edit Message
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          setFocus('share')
-                          share()
-                        }}
-                        disabled={!dedication || !message}
-                      >
-                        Share
-                      </Button>
-                    </>
-                  ) : (
-                    <>
-                      <Button onClick={() => setEditMode(true)}>Share your greetings</Button>
-                      <Button onClick={() => setOpen(!open)}>
-                        {open ? 'Close' : 'Open'} the greeting card
-                      </Button>
-                      <p>{isTouch ? 'Rotate with one finger' : 'Left click and drag to rotate'}</p>
-                      <p>{isTouch ? 'Move with two fingers' : 'Right click and drag to move'}</p>
-                      <p>{isTouch ? 'Pinch to zoom' : 'Scroll to zoom'}</p>
-                    </>
-                  )}
-                </div>
+              {innerMenuTransition((spring, editMode) =>
+                editMode ? (
+                  <a.div className="absolute right-0 flex flex-col gap-2 w-fit" style={spring}>
+                    <Button onClick={() => setEditMode(false)}>Back</Button>
+                    <Button
+                      onClick={() => setFocus('dedication')}
+                      disabled={editFocus === 'dedication'}
+                    >
+                      Edit Dedication
+                    </Button>
+                    <Button onClick={() => setFocus('message')} disabled={editFocus === 'message'}>
+                      Edit Message
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        setFocus('share')
+                        share()
+                      }}
+                      disabled={!dedication || !message}
+                    >
+                      Share
+                    </Button>
+                  </a.div>
+                ) : (
+                  <a.div className="absolute left-0 flex flex-col gap-2 w-fit" style={spring}>
+                    <Button onClick={() => setEditMode(true)}>Share your greetings</Button>
+                    <Button onClick={() => setOpen(!open)}>
+                      {open ? 'Close' : 'Open'} the greeting card
+                    </Button>
+                    <p>{isTouch ? 'Rotate with one finger' : 'Left click and drag to rotate'}</p>
+                    <p>{isTouch ? 'Move with two fingers' : 'Right click and drag to move'}</p>
+                    <p>{isTouch ? 'Pinch to zoom' : 'Scroll to zoom'}</p>
+                  </a.div>
+                ),
+              )}
 
-                <p>
-                  Made with ♥︎ by{' '}
-                  <a
-                    className="underline hover:bg-white/20 pointer-events-auto cursor-pointer"
-                    target="_blank"
-                    href="https://linktr.ee/dammafra"
-                  >
-                    dammafra
-                  </a>
-                </p>
-              </div>
+              <p className="absolute bottom-0">
+                Made with ♥︎ by{' '}
+                <a
+                  className="underline hover:bg-white/20 pointer-events-auto cursor-pointer"
+                  target="_blank"
+                  href="https://linktr.ee/dammafra"
+                >
+                  dammafra
+                </a>
+              </p>
             </a.div>
           ),
       )}
