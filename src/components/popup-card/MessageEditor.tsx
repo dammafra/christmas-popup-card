@@ -35,7 +35,7 @@ export function MessageEditor() {
               className="scale-400"
             >
               <TextArea
-                placeholder="Insert your message"
+                placeholder="Enter your message"
                 maxLength={400}
                 rows={21}
                 onChange={e => setValue(e.target.value)}

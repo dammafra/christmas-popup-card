@@ -29,7 +29,7 @@ export function DedicationEditor() {
           focus && (
             <Html scale={0.125} transform className="scale-400">
               <TextArea
-                placeholder="Insert your dedication"
+                placeholder="Enter your dedication"
                 maxLength={40}
                 rows={4}
                 onChange={e => setValue(e.target.value)}
