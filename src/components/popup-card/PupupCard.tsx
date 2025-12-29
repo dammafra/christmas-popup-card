@@ -3,19 +3,20 @@ import { useFrame } from '@react-three/fiber'
 import { useCallback, useEffect, useRef, useState, type JSX } from 'react'
 import { AnimationClip, LoopOnce, Mesh, MeshStandardMaterial, Object3D } from 'three'
 
-import { Phase, useDirection } from '@stores'
+import { Phase, useDirection, useEditor } from '@stores'
 
 import { Dedication } from './Dedication'
+import { DedicationEditor } from './DedicationEditor'
 import { Glow } from './Glow'
 import { Message } from './Message'
+import { MessageEditor } from './MessageEditor'
 
 export function PopupCard(props: JSX.IntrinsicElements['group']) {
-  const phase = useDirection(s => s.phase)
   const setPhase = useDirection(s => s.setPhase)
-
   const openTrigger = useDirection(s => s.open)
-  const setOpen = useDirection(s => s.setOpen)
   const [internalOpen, setInternalOpen] = useState(false)
+
+  const editMode = useEditor(s => s.enabled)
 
   const { scene, animations } = useGLTF('/models/popup-card.glb')
   const { actions } = useAnimations<AnimationClip>(animations, scene)
@@ -27,10 +28,13 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
 
   const coverRef = useRef<Object3D>(null!)
 
-  const scheduleBounce = useCallback(() => {
+  const scheduleBounce = useCallback((startOffset = 0) => {
     const clipDuration = openAction.current.getClip().duration
     const fadeTime = 0.25
-    const delay = ((clipDuration - fadeTime) / animationTimeScale) * 1000
+
+    const fadeStartTime = clipDuration - fadeTime
+    const timeRemaining = fadeStartTime - startOffset
+    const delay = Math.max(0, (timeRemaining / animationTimeScale) * 1000)
 
     bounceTimeout.current = setTimeout(() => {
       bounceAction.current.reset()
@@ -40,29 +44,35 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
   }, [])
 
   const open = useCallback(() => {
-    if (internalOpen || openAction.current.isRunning()) return
+    if (internalOpen) return
+
+    const duration = openAction.current.getClip().duration
+    const lastTime = Math.max(0, Math.min(openAction.current.time, duration))
 
     clearTimeout(bounceTimeout.current)
     openAction.current.reset()
     bounceAction.current.stop()
 
     openAction.current.timeScale = animationTimeScale
-    openAction.current.time = 0
+    openAction.current.time = lastTime
     openAction.current.play()
 
-    scheduleBounce()
+    scheduleBounce(lastTime)
     setInternalOpen(true)
   }, [internalOpen, scheduleBounce])
 
   const close = useCallback(() => {
-    if (!internalOpen || openAction.current.isRunning()) return
+    if (!internalOpen) return
+
+    const duration = openAction.current.getClip().duration
+    const lastTime = Math.max(0, Math.min(openAction.current.time, duration))
 
     clearTimeout(bounceTimeout.current)
     openAction.current.reset()
     bounceAction.current.stop()
 
     openAction.current.timeScale = -animationTimeScale
-    openAction.current.time = openAction.current.getClip().duration
+    openAction.current.time = lastTime
     openAction.current.play()
 
     setInternalOpen(false)
@@ -71,10 +81,6 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
   useEffect(() => {
     setPhase(Phase.DEDICATION)
   }, [setPhase])
-
-  useEffect(() => {
-    if (phase === Phase.OPENING) setTimeout(() => setOpen(true), 2500)
-  }, [phase])
 
   useEffect(() => {
     if (openTrigger) open()
@@ -116,8 +122,17 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
       <primitive object={scene} {...props} dispose={null} />
 
       <group ref={coverRef}>
-        <Dedication />
-        <Message />
+        {editMode ? (
+          <>
+            <DedicationEditor />
+            <MessageEditor />
+          </>
+        ) : (
+          <>
+            <Dedication />
+            <Message />
+          </>
+        )}
       </group>
 
       <Glow show={internalOpen} />

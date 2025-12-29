@@ -7,7 +7,7 @@ import { Vector3 } from 'three'
 const FONT_URL = '/fonts/satisfy.vara.json' // Ensure this path is correct
 const SCALE = 0.04
 const SAMPLE_RESOLUTION = 1
-const PARSE_TIME_LIMIT_MS = 12 // Yield to main thread every 12ms
+const PARSE_TIME_LIMIT_MS = 12
 
 interface VaraGlyph {
   paths: { mx: number; my: number; d: string; dy: number }[]
@@ -42,7 +42,7 @@ function useVaraFont(text: string, options: VaraFontOptions) {
       .catch(console.error)
   }, [])
 
-  // 2. Parse Text in Chunks (Time Slicing)
+  // 2. Parse Text in Chunks
   useEffect(() => {
     if (!fontData || !text) {
       setStrokes([])
@@ -52,7 +52,6 @@ function useVaraFont(text: string, options: VaraFontOptions) {
     let isCancelled = false
     setIsParsing(true)
 
-    // Reusable element
     const pathElem = document.createElementNS('http://www.w3.org/2000/svg', 'path')
 
     const parseGlyph = (glyph: VaraGlyph) => {
@@ -68,7 +67,6 @@ function useVaraFont(text: string, options: VaraFontOptions) {
         if (len <= 0) return
 
         const points: Vector3[] = []
-        // Reduce resolution slightly for very long texts if needed
         const sampleCount = Math.ceil(len / SAMPLE_RESOLUTION) + 1
 
         for (let i = 0; i <= sampleCount; i++) {
@@ -86,7 +84,6 @@ function useVaraFont(text: string, options: VaraFontOptions) {
     }
 
     const generate = async () => {
-      // Metrics state
       const lines: { strokes: Vector3[][]; width: number }[] = []
       let currentLineStrokes: Vector3[][] = []
       let currentLineX = 0
@@ -94,12 +91,10 @@ function useVaraFont(text: string, options: VaraFontOptions) {
       const paragraphs = text.split('\n')
       let loopStartTime = performance.now()
 
-      // --- Loop through text ---
       for (const paragraph of paragraphs) {
         const words = paragraph.split(' ')
 
         for (const word of words) {
-          // Check time budget - if exceeded, wait for next frame
           if (performance.now() - loopStartTime > PARSE_TIME_LIMIT_MS) {
             await new Promise(resolve => setTimeout(resolve, 0))
             if (isCancelled) return
@@ -127,7 +122,6 @@ function useVaraFont(text: string, options: VaraFontOptions) {
             }
           }
 
-          // Word Wrap
           const spaceSize = currentLineX === 0 ? 0 : options.spaceWidth * SCALE
           const fitsOnLine =
             options.maxWidth === Infinity || currentLineX + spaceSize + wordX <= options.maxWidth
@@ -151,8 +145,6 @@ function useVaraFont(text: string, options: VaraFontOptions) {
         currentLineX = 0
       }
 
-      // --- Alignment & Anchoring ---
-      // (This part is fast enough to run synchronously usually)
       const refWidth =
         options.maxWidth === Infinity ? Math.max(...lines.map(l => l.width)) : options.maxWidth
 
@@ -234,6 +226,7 @@ interface HandwrittenTextContentProps {
   color: string
   lineWidth: number
   speed: number
+  animate: boolean
   onResolve?: () => void
 }
 
@@ -242,15 +235,25 @@ function HandwrittenTextContent({
   color,
   lineWidth,
   speed,
+  animate,
   onResolve,
 }: HandwrittenTextContentProps) {
-  const [progress, setProgress] = useState(0)
+  const [progress, setProgress] = useState(animate ? 0 : 1)
   const resolvedRef = useRef(false)
 
   const totalPoints = useMemo(() => strokes.reduce((acc, s) => acc + s.length, 0), [strokes])
 
+  useEffect(() => {
+    if (!animate && !resolvedRef.current && totalPoints > 0) {
+      resolvedRef.current = true
+      onResolve?.()
+    }
+  }, [animate, onResolve, totalPoints])
+
   useFrame((_, delta) => {
-    if (totalPoints > 0 && progress < 1) {
+    if (!animate || progress >= 1) return
+
+    if (totalPoints > 0) {
       const increment = (speed * delta) / totalPoints
       const val = Math.min(progress + increment, 1)
       setProgress(val)
@@ -264,11 +267,7 @@ function HandwrittenTextContent({
 
   if (!strokes.length) return null
 
-  // Calculate global point count to draw
   const pointsToDraw = Math.floor(totalPoints * progress)
-
-  // Pre-calculating offsets is fast, but we can memoize if really needed.
-  // The map below is where the performance gain lives.
   let accumulatedPoints = 0
 
   return (
@@ -278,16 +277,12 @@ function HandwrittenTextContent({
         const end = start + pts.length
         accumulatedPoints = end
 
-        // Optimization 1: Skip future lines completely
         if (pointsToDraw < start) return null
 
-        // Optimization 2: Don't slice fully visible lines!
-        // Passing the original 'pts' reference prevents creating new arrays.
         if (pointsToDraw >= end) {
           return <Line key={i} points={pts} color={color} lineWidth={lineWidth} worldUnits />
         }
 
-        // Only slice the specific line currently being animated
         const drawCount = pointsToDraw - start
         if (drawCount < 2) return null
 
@@ -312,6 +307,7 @@ type HandwrittenTextProps = Partial<VaraFontOptions> &
   JSX.IntrinsicElements['group'] & {
     children: string
     center?: boolean
+    animate?: boolean
   }
 
 export function HandwrittenText({
@@ -325,13 +321,11 @@ export function HandwrittenText({
   textAlign = 'left',
   lineHeight = 1,
   center = false,
+  animate = true,
   onResolve,
   ...props
 }: HandwrittenTextProps) {
-  const {
-    strokes,
-    //isParsing
-  } = useVaraFont(children, {
+  const { strokes } = useVaraFont(children, {
     letterSpacing,
     spaceWidth,
     maxWidth,
@@ -340,17 +334,15 @@ export function HandwrittenText({
     center,
   })
 
-  // Optional: You can render a loading state here if isParsing is true
-
   return (
     <group {...props}>
       <HandwrittenTextContent
-        // Reset key when strokes change to restart animation
         key={strokes.length}
         strokes={strokes}
         color={color}
         lineWidth={lineWidth}
-        speed={speed * 100} // Adjust scale as needed
+        speed={speed * 100}
+        animate={animate}
         onResolve={onResolve}
       />
     </group>
