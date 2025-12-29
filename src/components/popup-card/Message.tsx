@@ -8,8 +8,9 @@ export function Message() {
   const phase = useDirection(s => s.phase)
   const setPhase = useDirection(s => s.setPhase)
 
-  const message = safeJsonParse(atob(location.search.substring(1)), {
-    message: `
+  const message = decodeURIComponent(
+    safeJsonParse(atob(location.search.substring(1)), {
+      message: `
       May this holiday season be filled with laughter, love and cherished moments with loved ones.
 
       Happy Christmas and a wonderful new year!
@@ -17,7 +18,8 @@ export function Message() {
 
       From dammafra.
     `,
-  }).message
+    }).message,
+  )
 
   return (
     phase >= Phase.MESSAGE && (

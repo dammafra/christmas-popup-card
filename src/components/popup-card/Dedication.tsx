@@ -9,9 +9,11 @@ export function Dedication() {
   const phase = useDirection(s => s.phase)
   const [showDedication, setShowDedication] = useState(false)
 
-  const dedication = safeJsonParse(atob(location.search.substring(1)), {
-    dedication: 'For whoever this reaches',
-  }).dedication
+  const dedication = decodeURIComponent(
+    safeJsonParse(atob(location.search.substring(1)), {
+      dedication: 'For whoever this reaches',
+    }).dedication,
+  )
 
   useEffect(() => {
     if (phase === Phase.LOADING) return
