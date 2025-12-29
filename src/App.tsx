@@ -1,13 +1,13 @@
 import { StrictMode } from 'react'
 
 import { Experience } from '@components'
-import { DoubleTapPreventer, GUI } from '@components/helpers'
+import { GUI } from '@components/helpers'
 
 export default function App() {
   return (
     <>
       <GUI />
-      <DoubleTapPreventer />
+      {/* <DoubleTapPreventer /> */}
 
       <StrictMode>
         <Experience />
