@@ -2,23 +2,37 @@ import { MathUtils } from 'three'
 
 import { HandwrittenText } from '@components/helpers'
 import { Phase, useDirection } from '@stores'
-import { safeJsonParse } from '@utils'
+import { randomOneOf, safeJsonParse } from '@utils'
+import { useMemo } from 'react'
+
+const MESSAGES = [
+  'Wishing you a joyful Christmas and a New Year filled with peace and happiness.',
+  'May this holiday season be filled with laughter, love and cherished moments with loved ones.',
+  'Sending you heartfelt wishes for a Merry Christmas and a wonderful New Year.',
+  'May this festive season bring you joy, love, and unforgettable memories.',
+  'Warmest wishes for a Christmas full of cheer and a bright New Year ahead.',
+  'Hoping your holidays are filled with happiness, relaxation, and good company.',
+  'Wishing you all the magic of Christmas and the hope of a prosperous New Year.',
+  'May the spirit of the season fill your heart with peace and happiness throughout the year.',
+  'Sending love and best wishes for a festive Christmas and a successful New Year.',
+  'May your holidays sparkle with joy and your New Year be full of exciting opportunities.',
+]
 
 export function Message() {
   const phase = useDirection(s => s.phase)
   const setPhase = useDirection(s => s.setPhase)
 
-  const message = decodeURIComponent(
-    safeJsonParse(atob(location.search.substring(1)), {
-      message: `
-      May this holiday season be filled with laughter, love and cherished moments with loved ones.
-
-      Happy Christmas and a wonderful new year!
-
+  const message = useMemo(
+    () =>
+      decodeURIComponent(
+        safeJsonParse(atob(location.search.substring(1)), {
+          message: randomOneOf(MESSAGES).concat(`
 
       From dammafra.
-    `,
-    }).message,
+    `),
+        }).message,
+      ),
+    [],
   )
 
   return (

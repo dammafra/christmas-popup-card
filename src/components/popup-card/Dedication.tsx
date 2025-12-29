@@ -1,18 +1,29 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { MathUtils } from 'three'
 
 import { HandwrittenText } from '@components/helpers'
 import { Phase, useDirection } from '@stores'
-import { safeJsonParse } from '@utils'
+import { randomOneOf, safeJsonParse } from '@utils'
+
+const DEDICATIONS = [
+  'To the one reading this',
+  'To whoever this reaches',
+  'To anyone who finds this message',
+  'To you',
+]
 
 export function Dedication() {
   const phase = useDirection(s => s.phase)
   const [showDedication, setShowDedication] = useState(false)
 
-  const dedication = decodeURIComponent(
-    safeJsonParse(atob(location.search.substring(1)), {
-      dedication: 'For whoever this reaches',
-    }).dedication,
+  const dedication = useMemo(
+    () =>
+      decodeURIComponent(
+        safeJsonParse(atob(location.search.substring(1)), {
+          dedication: randomOneOf(DEDICATIONS),
+        }).dedication,
+      ),
+    [],
   )
 
   useEffect(() => {
