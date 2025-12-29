@@ -2,10 +2,18 @@ import { create } from 'zustand'
 
 function sanitize(string: string) {
   return string
+    .replaceAll(/à|á/g, "a'")
+    .replaceAll(/è|é/g, "e'")
+    .replaceAll(/ì|í/g, "i'")
+    .replaceAll(/ò|ó/g, "o'")
+    .replaceAll(/ù|ú/g, "u'")
     .normalize('NFD')
     .replace(/\p{Diacritic}/gu, '')
     .normalize('NFC')
-    .replace(/[^\x00-\x7F]/g, '')
+    .replace(
+      /[^\x00-\x7F~`!@#$%^&*()_+\-={}$begin:math:display$$end:math:display$:"<>?;',./\\|]/g,
+      '',
+    )
 }
 
 type EditorFocus = 'dedication' | 'message' | 'preview' | 'share'
