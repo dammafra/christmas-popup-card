@@ -7,8 +7,6 @@ import { safeJsonParse } from '@utils'
 
 export function Dedication() {
   const phase = useDirection(s => s.phase)
-  const setPhase = useDirection(s => s.setPhase)
-
   const [showDedication, setShowDedication] = useState(false)
 
   const dedication = safeJsonParse(atob(location.search.substring(1)), {
@@ -34,10 +32,7 @@ export function Dedication() {
         maxWidth={6}
         textAlign="center"
         center
-        onResolve={() => {
-          if (phase === Phase.END) return
-          setTimeout(() => setPhase(Phase.READY), 500)
-        }}
+        speed={phase > Phase.DEDICATION ? 20 : 3}
       >
         {dedication}
       </HandwrittenText>

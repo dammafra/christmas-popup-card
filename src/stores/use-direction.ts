@@ -3,7 +3,6 @@ import { create } from 'zustand'
 export enum Phase {
   LOADING = 1,
   DEDICATION,
-  READY,
   OPENING,
   MESSAGE,
   END,

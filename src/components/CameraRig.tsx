@@ -127,7 +127,6 @@ export function CameraRig() {
     switch (phase) {
       case Phase.LOADING:
       case Phase.DEDICATION:
-      case Phase.READY:
         dedicationFocus(currentId)
         break
       case Phase.OPENING:

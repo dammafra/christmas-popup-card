@@ -26,7 +26,7 @@ export function Message() {
         lineWidth={0.015}
         scale={0.2}
         maxWidth={10}
-        speed={4}
+        speed={phase > Phase.MESSAGE ? 20 : 5}
         rotation={[MathUtils.degToRad(90), 0, MathUtils.degToRad(180)]}
         onResolve={() => setTimeout(() => setPhase(Phase.END), 1000)}
       >

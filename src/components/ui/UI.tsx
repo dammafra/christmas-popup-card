@@ -28,7 +28,14 @@ export function UI() {
     config: config.molasses,
   }
 
-  const startActionTransition = useTransition(phase === Phase.READY, transitionConfig)
+  const startActionTransition = useTransition(phase === Phase.DEDICATION, {
+    ...transitionConfig,
+    delay: phase === Phase.DEDICATION ? 1000 : 0,
+  })
+  const skipActionTransition = useTransition(
+    phase >= Phase.OPENING && phase < Phase.END,
+    transitionConfig,
+  )
   const mainMenuTransition = useTransition(phase === Phase.END, {
     ...transitionConfig,
     delay: 3500,
@@ -58,6 +65,19 @@ export function UI() {
               onClick={() => setPhase(Phase.OPENING)}
             >
               Open
+            </Button>
+          ),
+      )}
+
+      {skipActionTransition(
+        (spring, show) =>
+          show && (
+            <Button
+              className="absolute! bottom-4 left-1/2 -translate-x-1/2 px-6 py-2 text-2xl"
+              style={spring}
+              onClick={() => setPhase(Phase.END)}
+            >
+              Skip
             </Button>
           ),
       )}
