@@ -20,7 +20,7 @@ export function Experience() {
           fov: 45,
           near: 0.1,
           far: 100,
-          position: [0, 2, 0],
+          position: [0, 1, 0],
         }}
       >
         <CameraRig />

@@ -86,18 +86,23 @@ export function UI() {
       {mainMenuTransition(
         (spring, show) =>
           show && (
-            <a.div className="absolute inset-4" style={spring}>
-              {innerMenuTransition((spring, editMode) =>
-                editMode ? (
+            <a.div className="absolute inset-4 text-right" style={spring}>
+              {innerMenuTransition((spring, editing) =>
+                editing ? (
                   <a.div className="absolute right-0 flex flex-col gap-2 w-fit" style={spring}>
-                    <Button onClick={() => setEditMode(false)}>Back</Button>
+                    <Button onClick={() => setEditMode(false)} disabled={!editMode}>
+                      Back
+                    </Button>
                     <Button
                       onClick={() => setFocus('dedication')}
-                      disabled={editFocus === 'dedication'}
+                      disabled={!editMode || editFocus === 'dedication'}
                     >
                       Edit Dedication
                     </Button>
-                    <Button onClick={() => setFocus('message')} disabled={editFocus === 'message'}>
+                    <Button
+                      onClick={() => setFocus('message')}
+                      disabled={!editMode || editFocus === 'message'}
+                    >
                       Edit Message
                     </Button>
                     <Button
@@ -105,15 +110,17 @@ export function UI() {
                         setFocus('share')
                         share()
                       }}
-                      disabled={!dedication || !message}
+                      disabled={!editMode || !dedication || !message}
                     >
-                      Share
+                      {editFocus === 'share' ? 'URL Copied' : 'Share'}
                     </Button>
                   </a.div>
                 ) : (
-                  <a.div className="absolute left-0 flex flex-col gap-2 w-fit" style={spring}>
-                    <Button onClick={() => setEditMode(true)}>Share your greetings</Button>
-                    <Button onClick={() => setOpen(!open)}>
+                  <a.div className="absolute right-0 flex flex-col gap-2 w-fit" style={spring}>
+                    <Button onClick={() => setEditMode(true)} disabled={editMode}>
+                      Share your greetings
+                    </Button>
+                    <Button onClick={() => setOpen(!open)} disabled={editMode}>
                       {open ? 'Close' : 'Open'} the greeting card
                     </Button>
                     <p>{isTouch ? 'Rotate with one finger' : 'Left click and drag to rotate'}</p>

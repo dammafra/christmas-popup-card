@@ -53,10 +53,10 @@ export function CameraRig() {
     cameraControls.normalizeRotations()
 
     return Promise.all([
+      cameraControls.moveTo(0, 0, 0, true),
       cameraControls.rotatePolarTo(0, true),
       cameraControls.rotateAzimuthTo(0, true),
-      cameraControls.dollyTo(2, true),
-      cameraControls.moveTo(0, viewport.aspect < 1 ? 1.5 : 0, 0, true),
+      cameraControls.dollyTo(viewport.aspect < 1 ? 4 : 2, true),
     ])
   }
 
