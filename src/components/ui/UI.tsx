@@ -70,7 +70,7 @@ export function UI() {
               style={spring}
               onClick={() => setPhase(Phase.OPENING)}
             >
-              Open
+              Unfold
             </Button>
           ),
       )}
