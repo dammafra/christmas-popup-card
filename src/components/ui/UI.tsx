@@ -128,7 +128,7 @@ export function UI() {
                 editing ? (
                   <a.div className="absolute right-0 flex flex-col gap-2 w-fit" style={spring}>
                     <Button onClick={() => setEditMode(false)} disabled={!editMode}>
-                      Cancel
+                      Back
                     </Button>
                   </a.div>
                 ) : (
