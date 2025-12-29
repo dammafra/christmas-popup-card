@@ -18,7 +18,7 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
 
   const editMode = useEditor(s => s.enabled)
 
-  const { scene, animations } = useGLTF('/models/popup-card.glb')
+  const { scene, animations } = useGLTF('/models/popup-card-compressed.glb')
   const { actions } = useAnimations<AnimationClip>(animations, scene)
 
   const animationTimeScale = 1.5
@@ -140,4 +140,4 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
   )
 }
 
-useGLTF.preload('/models/popup-card.glb')
+useGLTF.preload('/models/popup-card-compressed.glb')
