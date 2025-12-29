@@ -56,7 +56,7 @@ export function CameraRig() {
       cameraControls.moveTo(0, 0, 0, true),
       cameraControls.rotatePolarTo(0, true),
       cameraControls.rotateAzimuthTo(0, true),
-      cameraControls.dollyTo(viewport.aspect < 1 ? 4 : 2, true),
+      cameraControls.dollyTo(viewport.aspect < 1 ? 4.5 : 3, true),
     ])
   }
 

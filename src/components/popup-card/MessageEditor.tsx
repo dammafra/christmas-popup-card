@@ -28,8 +28,8 @@ export function MessageEditor() {
         (spring, focus) =>
           focus && (
             <Html
-              scale={0.125}
               transform
+              scale={0.125}
               position={[2.45, -0.02, -0.1]}
               rotation={[MathUtils.degToRad(90), 0, MathUtils.degToRad(180)]}
               className="scale-400"

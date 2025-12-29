@@ -92,32 +92,43 @@ export function UI() {
         (spring, show) =>
           show && (
             <a.div className="absolute inset-4 text-right" style={spring}>
+              {innerMenuTransition(
+                (spring, editing) =>
+                  editing && (
+                    <a.div
+                      className="absolute bottom-0  left-1/2 -translate-x-1/2 flex gap-2 w-full justify-center text-2xl"
+                      style={spring}
+                    >
+                      {editFocus === 'dedication' && (
+                        <Button
+                          className="px-6 py-2"
+                          onClick={() => setFocus('message')}
+                          disabled={!editMode || !dedication}
+                        >
+                          Next
+                        </Button>
+                      )}
+                      {editFocus !== 'dedication' && (
+                        <Button
+                          className="px-6 py-2"
+                          onClick={() => {
+                            setFocus('share')
+                            share()
+                          }}
+                          disabled={!editMode || !message}
+                        >
+                          {editFocus === 'share' ? 'URL Copied' : 'Share'}
+                        </Button>
+                      )}
+                    </a.div>
+                  ),
+              )}
+
               {innerMenuTransition((spring, editing) =>
                 editing ? (
                   <a.div className="absolute right-0 flex flex-col gap-2 w-fit" style={spring}>
                     <Button onClick={() => setEditMode(false)} disabled={!editMode}>
-                      Back
-                    </Button>
-                    <Button
-                      onClick={() => setFocus('dedication')}
-                      disabled={!editMode || editFocus === 'dedication'}
-                    >
-                      Edit Dedication
-                    </Button>
-                    <Button
-                      onClick={() => setFocus('message')}
-                      disabled={!editMode || editFocus === 'message'}
-                    >
-                      Edit Message
-                    </Button>
-                    <Button
-                      onClick={() => {
-                        setFocus('share')
-                        share()
-                      }}
-                      disabled={!editMode || !dedication || !message}
-                    >
-                      {editFocus === 'share' ? 'URL Copied' : 'Share'}
+                      Cancel
                     </Button>
                   </a.div>
                 ) : (
@@ -135,16 +146,21 @@ export function UI() {
                 ),
               )}
 
-              <p className="absolute bottom-0">
-                Made with ♥︎ by{' '}
-                <a
-                  className="underline hover:bg-white/20 pointer-events-auto cursor-pointer"
-                  target="_blank"
-                  href="https://linktr.ee/dammafra"
-                >
-                  dammafra
-                </a>
-              </p>
+              {innerMenuTransition(
+                (spring, editing) =>
+                  !editing && (
+                    <a.p className="absolute bottom-0" style={spring}>
+                      Made with ♥︎ by{' '}
+                      <a
+                        className="underline hover:bg-white/20 pointer-events-auto cursor-pointer"
+                        target="_blank"
+                        href="https://linktr.ee/dammafra"
+                      >
+                        dammafra
+                      </a>
+                    </a.p>
+                  ),
+              )}
             </a.div>
           ),
       )}
