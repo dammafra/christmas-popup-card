@@ -1,5 +1,13 @@
 import { create } from 'zustand'
 
+function sanitize(string: string) {
+  return string
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .normalize('NFC')
+    .replace(/[^\x00-\x7F]/g, '')
+}
+
 type EditorFocus = 'dedication' | 'message' | 'share'
 
 type EditorStore = {
@@ -24,8 +32,8 @@ export const useEditor = create<EditorStore>()(set => ({
   setFocus: focus => set(() => ({ focus })),
 
   dedication: '',
-  setDedication: dedication => set(() => ({ dedication })),
+  setDedication: dedication => set(() => ({ dedication: sanitize(dedication) })),
 
   message: '',
-  setMessage: message => set(() => ({ message })),
+  setMessage: message => set(() => ({ message: sanitize(message) })),
 }))
