@@ -48,7 +48,7 @@ export function UI() {
   }
 
   return (
-    <div className="fixed inset-0 pointer-events-none font-satisfy text-white text-xl">
+    <div className="fixed inset-0 pointer-events-none font-satisfy text-white text-xl z-99999999">
       {startActionTransition(
         (spring, show) =>
           show && (
@@ -65,40 +65,58 @@ export function UI() {
       {mainMenuTransition(
         (spring, show) =>
           show && (
-            <a.div className="absolute top-4 left-4 flex flex-col gap-2" style={spring}>
-              {editMode ? (
-                <>
-                  <Button onClick={() => setEditMode(false)}>Back</Button>
-                  <Button
-                    onClick={() => setFocus('dedication')}
-                    disabled={editFocus === 'dedication'}
+            <a.div className="absolute inset-4" style={spring}>
+              <div className="flex flex-col justify-between absolute top-0 h-full">
+                <div className="w-fit flex flex-col gap-2">
+                  {editMode ? (
+                    <>
+                      <Button onClick={() => setEditMode(false)}>Back</Button>
+                      <Button
+                        onClick={() => setFocus('dedication')}
+                        disabled={editFocus === 'dedication'}
+                      >
+                        Edit Dedication
+                      </Button>
+                      <Button
+                        onClick={() => setFocus('message')}
+                        disabled={editFocus === 'message'}
+                      >
+                        Edit Message
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          setFocus('share')
+                          share()
+                        }}
+                        disabled={!dedication || !message}
+                      >
+                        Share
+                      </Button>
+                    </>
+                  ) : (
+                    <>
+                      <Button onClick={() => setEditMode(true)}>Share your greetings</Button>
+                      <Button onClick={() => setOpen(!open)}>
+                        {open ? 'Close' : 'Open'} the greeting card
+                      </Button>
+                      <p>{isTouch ? 'Rotate with one finger' : 'Left click and drag to rotate'}</p>
+                      <p>{isTouch ? 'Move with two fingers' : 'Right click and drag to move'}</p>
+                      <p>{isTouch ? 'Pinch to zoom' : 'Scroll to zoom'}</p>
+                    </>
+                  )}
+                </div>
+
+                <p>
+                  Made with ♥︎ by{' '}
+                  <a
+                    className="underline hover:bg-white/20 pointer-events-auto cursor-pointer"
+                    target="_blank"
+                    href="https://linktr.ee/dammafra"
                   >
-                    Edit Dedication
-                  </Button>
-                  <Button onClick={() => setFocus('message')} disabled={editFocus === 'message'}>
-                    Edit Message
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setFocus('share')
-                      share()
-                    }}
-                    disabled={!dedication || !message}
-                  >
-                    Share
-                  </Button>
-                </>
-              ) : (
-                <>
-                  <Button onClick={() => setEditMode(true)}>Share your greetings</Button>
-                  <Button onClick={() => setOpen(!open)}>
-                    {open ? 'Close' : 'Open'} the greeting card
-                  </Button>
-                  <p>{isTouch ? 'Rotate with one finger' : 'Left click and drag to rotate'}</p>
-                  <p>{isTouch ? 'Move with two fingers' : 'Right click and drag to move'}</p>
-                  <p>{isTouch ? 'Pinch to zoom' : 'Scroll to zoom'}</p>
-                </>
-              )}
+                    dammafra
+                  </a>
+                </p>
+              </div>
             </a.div>
           ),
       )}
