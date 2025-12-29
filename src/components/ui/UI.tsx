@@ -120,7 +120,7 @@ export function UI() {
                       {(editFocus === 'preview' || editFocus === 'share') && (
                         <>
                           <Button onClick={() => setOpen(!open)} disabled={!editMode}>
-                            {open ? 'Close' : 'Open'}
+                            {open ? 'Fold' : 'Unfold'}
                           </Button>
                           <Button onClick={() => setFocus('dedication')} disabled={!editMode}>
                             Edit
@@ -154,7 +154,7 @@ export function UI() {
                       Share your greetings
                     </Button>
                     <Button onClick={() => setOpen(!open)} disabled={editMode}>
-                      {open ? 'Close' : 'Open'} the greeting card
+                      {open ? 'Fold' : 'Unfold'} the greeting card
                     </Button>
                     <p>{isTouch ? 'Rotate with one finger' : 'Left click and drag to rotate'}</p>
                     <p>{isTouch ? 'Move with two fingers' : 'Right click and drag to move'}</p>
