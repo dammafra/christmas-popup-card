@@ -9,18 +9,18 @@ export enum Phase {
   END,
 }
 
-type Direction = {
+type DirectionStore = {
   phase: Phase
-  open: boolean
-
   setPhase: (phase: Phase) => void
-  toggleOpen: () => void
+
+  open: boolean
+  setOpen: (open: boolean) => void
 }
 
-export const useDirection = create<Direction>()(set => ({
+export const useDirection = create<DirectionStore>()(set => ({
   phase: Phase.LOADING,
-  open: false,
-
   setPhase: phase => set(() => ({ phase })),
-  toggleOpen: () => set(state => ({ open: !state.open })),
+
+  open: false,
+  setOpen: open => set(() => ({ open })),
 }))

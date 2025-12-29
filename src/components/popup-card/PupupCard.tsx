@@ -10,9 +10,11 @@ import { Glow } from './Glow'
 import { Message } from './Message'
 
 export function PopupCard(props: JSX.IntrinsicElements['group']) {
+  const phase = useDirection(s => s.phase)
   const setPhase = useDirection(s => s.setPhase)
 
   const openTrigger = useDirection(s => s.open)
+  const setOpen = useDirection(s => s.setOpen)
   const [internalOpen, setInternalOpen] = useState(false)
 
   const { scene, animations } = useGLTF('/models/popup-card.glb')
@@ -69,6 +71,10 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
   useEffect(() => {
     setPhase(Phase.DEDICATION)
   }, [setPhase])
+
+  useEffect(() => {
+    if (phase === Phase.OPENING) setTimeout(() => setOpen(true), 2500)
+  }, [phase])
 
   useEffect(() => {
     if (openTrigger) open()

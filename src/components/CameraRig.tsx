@@ -12,7 +12,6 @@ export function CameraRig() {
 
   const phase = useDirection(s => s.phase)
   const setPhase = useDirection(s => s.setPhase)
-  const toggleOpen = useDirection(s => s.toggleOpen)
 
   useEffect(() => {
     const cameraControls = controls as CameraControlsImpl
@@ -28,6 +27,7 @@ export function CameraRig() {
         cameraControls.smoothTime = 2
         cameraControls.dollyTo(8, true)
         cameraControls.moveTo(0, 1, 0, true)
+        cameraControls.normalizeRotations()
         cameraControls.rotatePolarTo(MathUtils.degToRad(60), true)
         cameraControls.rotateAzimuthTo(MathUtils.degToRad(-360), true).then(() => {
           cameraControls.smoothTime = 1
@@ -39,8 +39,6 @@ export function CameraRig() {
             .dollyTo(viewport.aspect < 1 ? 5.5 : 4, true)
             .then(() => setPhase(Phase.MESSAGE))
         })
-
-        setTimeout(toggleOpen, 2500)
         break
 
       case Phase.END:

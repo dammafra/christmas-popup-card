@@ -107,6 +107,7 @@ export function Snow({ count = 300 }: SnowProps) {
           depthWrite={false}
           opacity={0.8}
           side={DoubleSide}
+          color={[3, 3, 3]}
         />
       </instancedMesh>
     )
