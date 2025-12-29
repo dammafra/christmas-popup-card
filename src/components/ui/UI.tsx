@@ -66,7 +66,7 @@ export function UI() {
         (spring, show) =>
           show && (
             <Button
-              className="absolute! bottom-4 left-1/2 -translate-x-1/2 px-6 py-2 text-2xl"
+              className="absolute! bottom-4 left-1/2 -translate-x-1/2 px-6 py-2 text-2xl w-26"
               style={spring}
               onClick={() => setPhase(Phase.OPENING)}
             >
@@ -79,7 +79,7 @@ export function UI() {
         (spring, show) =>
           show && (
             <Button
-              className="absolute! bottom-4 left-1/2 -translate-x-1/2 px-6 py-2 text-2xl"
+              className="absolute! bottom-4 left-1/2 -translate-x-1/2 px-6 py-2 text-2xl w-26"
               style={spring}
               onClick={() => setPhase(Phase.END)}
             >
@@ -150,10 +150,10 @@ export function UI() {
                   </a.div>
                 ) : (
                   <a.div className="absolute right-0 flex flex-col gap-2 w-fit" style={spring}>
-                    <Button onClick={() => setEditMode(true)} disabled={editMode}>
+                    <Button className="w-60" onClick={() => setEditMode(true)} disabled={editMode}>
                       Share your greetings
                     </Button>
-                    <Button onClick={() => setOpen(!open)} disabled={editMode}>
+                    <Button className="w-60" onClick={() => setOpen(!open)} disabled={editMode}>
                       {open ? 'Fold' : 'Unfold'} the greeting card
                     </Button>
                     <p>{isTouch ? 'Rotate with one finger' : 'Left click and drag to rotate'}</p>
