@@ -8,7 +8,7 @@ function sanitize(string: string) {
     .replace(/[^\x00-\x7F]/g, '')
 }
 
-type EditorFocus = 'dedication' | 'message' | 'share'
+type EditorFocus = 'dedication' | 'message' | 'preview' | 'share'
 
 type EditorStore = {
   enabled: boolean

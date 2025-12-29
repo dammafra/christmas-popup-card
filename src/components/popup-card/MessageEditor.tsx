@@ -41,7 +41,7 @@ export function MessageEditor() {
                 onChange={e => setValue(e.target.value)}
                 onFocus={e => (e.target.value = value)}
                 style={spring}
-                className="w-40 px-2 placeholder:text-sm!"
+                className="w-40 px-2"
                 autoFocus
               />
             </Html>

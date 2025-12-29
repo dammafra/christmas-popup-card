@@ -56,7 +56,7 @@ export function CameraRig() {
       cameraControls.moveTo(0, 0, 0, true),
       cameraControls.rotatePolarTo(0, true),
       cameraControls.rotateAzimuthTo(0, true),
-      cameraControls.dollyTo(viewport.aspect < 1 ? 4 : 3, true),
+      cameraControls.dollyTo(viewport.aspect < 1 ? 4 : 2, true),
     ])
   }
 
@@ -105,6 +105,7 @@ export function CameraRig() {
 
     disable()
     cameraControls.smoothTime = 1
+    cameraControls.normalizeRotations()
 
     return Promise.all([
       cameraControls.dollyTo(8, true),
@@ -152,6 +153,7 @@ export function CameraRig() {
         messageFocus(currentId)
         break
 
+      case 'preview':
       case 'share':
         defaults(currentId)
         break

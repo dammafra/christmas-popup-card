@@ -35,7 +35,7 @@ export function DedicationEditor() {
                 onChange={e => setValue(e.target.value)}
                 onFocus={e => (e.target.value = value)}
                 style={spring}
-                className="w-30 text-center px-5.5"
+                className="w-30 text-center px-5"
                 autoFocus
               />
             </Html>

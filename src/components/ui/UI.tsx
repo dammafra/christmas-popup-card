@@ -108,17 +108,34 @@ export function UI() {
                           Next
                         </Button>
                       )}
-                      {editFocus !== 'dedication' && (
+                      {editFocus === 'message' && (
                         <Button
                           className="px-6 py-2"
-                          onClick={() => {
-                            setFocus('share')
-                            share()
-                          }}
+                          onClick={() => setFocus('preview')}
                           disabled={!editMode || !message}
                         >
-                          {editFocus === 'share' ? 'URL Copied' : 'Share'}
+                          Preview
                         </Button>
+                      )}
+                      {(editFocus === 'preview' || editFocus === 'share') && (
+                        <>
+                          <Button onClick={() => setOpen(!open)} disabled={!editMode}>
+                            {open ? 'Close' : 'Open'}
+                          </Button>
+                          <Button onClick={() => setFocus('dedication')} disabled={!editMode}>
+                            Edit
+                          </Button>
+                          <Button
+                            className="px-6 py-2"
+                            onClick={() => {
+                              setFocus('share')
+                              share()
+                            }}
+                            disabled={!editMode}
+                          >
+                            {editFocus === 'share' ? 'URL Copied' : 'Share'}
+                          </Button>
+                        </>
                       )}
                     </a.div>
                   ),
