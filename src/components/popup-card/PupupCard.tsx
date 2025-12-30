@@ -14,8 +14,6 @@ import { MessageEditor } from './MessageEditor'
 export function PopupCard(props: JSX.IntrinsicElements['group']) {
   const setPhase = useDirection(s => s.setPhase)
   const openTrigger = useDirection(s => s.open)
-  const [internalOpen, setInternalOpen] = useState(false)
-
   const editMode = useEditor(s => s.enabled)
 
   const { gl } = useThree()
@@ -28,6 +26,7 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
   const bounceTimeout = useRef<number | undefined>(undefined)
 
   const coverRef = useRef<Object3D>(null!)
+  const [glow, setGlow] = useState(false)
 
   const scheduleBounce = useCallback((startOffset = 0) => {
     const clipDuration = openAction.current.getClip().duration
@@ -41,12 +40,12 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
       bounceAction.current.reset()
       bounceAction.current.play()
       openAction.current.crossFadeTo(bounceAction.current, fadeTime, false)
+
+      setGlow(true)
     }, delay)
   }, [])
 
   const open = useCallback(() => {
-    if (internalOpen) return
-
     const duration = openAction.current.getClip().duration
     const lastTime = Math.max(0, Math.min(openAction.current.time, duration))
 
@@ -59,12 +58,9 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
     openAction.current.play()
 
     scheduleBounce(lastTime)
-    setInternalOpen(true)
-  }, [internalOpen, scheduleBounce])
+  }, [glow, scheduleBounce])
 
   const close = useCallback(() => {
-    if (!internalOpen) return
-
     const duration = openAction.current.getClip().duration
     const lastTime = Math.max(0, Math.min(openAction.current.time, duration))
 
@@ -76,8 +72,8 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
     openAction.current.time = lastTime
     openAction.current.play()
 
-    setInternalOpen(false)
-  }, [internalOpen])
+    setGlow(false)
+  }, [glow])
 
   useEffect(() => {
     setPhase(Phase.DEDICATION)
@@ -141,7 +137,7 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
         )}
       </group>
 
-      <Glow show={internalOpen} />
+      <Glow show={glow} />
     </>
   )
 }

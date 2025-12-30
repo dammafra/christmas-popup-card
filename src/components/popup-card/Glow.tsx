@@ -9,7 +9,6 @@ export function Glow({ show }: GlowProps) {
   const { opacity } = useSpring({
     from: { opacity: show ? 0 : 0.8 },
     to: { opacity: show ? 0.8 : 0 },
-    delay: show ? 1500 : 0,
   })
 
   return (
