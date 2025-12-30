@@ -2,7 +2,7 @@ import { MathUtils } from 'three'
 
 import { HandwrittenText } from '@components/helpers'
 import { Phase, useDirection } from '@stores'
-import { randomOneOf, safeJsonParse } from '@utils'
+import { randomOneOf, safeDecode } from '@utils'
 import { useMemo } from 'react'
 
 const MESSAGES = [
@@ -25,7 +25,7 @@ export function Message() {
   const message = useMemo(
     () =>
       decodeURIComponent(
-        safeJsonParse(atob(location.search.substring(1)), {
+        safeDecode(location.search.substring(1), {
           message: randomOneOf(MESSAGES).concat(`
 
       From dammafra.

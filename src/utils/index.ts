@@ -1,3 +1,3 @@
 export * from './dbg'
 export * from './random'
-export * from './safe-json-parse'
+export * from './safe-decode'

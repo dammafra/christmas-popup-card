@@ -3,7 +3,7 @@ import { MathUtils } from 'three'
 
 import { HandwrittenText } from '@components/helpers'
 import { Phase, useDirection } from '@stores'
-import { randomOneOf, safeJsonParse } from '@utils'
+import { randomOneOf, safeDecode } from '@utils'
 
 const DEDICATIONS = [
   'To the one reading this',
@@ -19,7 +19,7 @@ export function Dedication() {
   const dedication = useMemo(
     () =>
       decodeURIComponent(
-        safeJsonParse(atob(location.search.substring(1)), {
+        safeDecode(location.search.substring(1), {
           dedication: randomOneOf(DEDICATIONS),
         }).dedication,
       ),
