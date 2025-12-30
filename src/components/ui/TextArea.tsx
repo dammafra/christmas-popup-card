@@ -17,7 +17,7 @@ export const TextArea = animated(
       <a.div className="relative font-satisfy" style={style}>
         <textarea
           className={clsx(
-            'border-b border-white outline-none ring-0 bg-white/20 resize-none leading-4 py-2 caret-white overflow-hidden placeholder:text-sm placeholder:text-gray-50 placeholder:opacity-50 select-text',
+            'border-b border-white outline-none ring-0 bg-white/20 resize-none leading-4 py-2 caret-white overflow-hidden placeholder:text-sm placeholder:text-gray-50 placeholder:opacity-50',
             className,
           )}
           onFocus={e => {
@@ -31,22 +31,16 @@ export const TextArea = animated(
           maxLength={maxLength}
           {...props}
         />
-        <div className="absolute -bottom-2.5 text-[7px] text-white w-full flex justify-between">
-          <div className="leading-2">
-            <p className="tracking-tighter">Special characters may be replaced</p>
-            <p className="tracking-tighter">Don' t share personal information</p>
-          </div>
-          {maxLength && (
-            <span
-              className={clsx({
-                'text-yellow-600': counter >= maxLength - 10 && counter < maxLength - 5,
-                'text-rose-600': counter >= maxLength - 5,
-              })}
-            >
-              {counter}/{maxLength}
-            </span>
-          )}
-        </div>
+        {maxLength && (
+          <span
+            className={clsx('absolute -bottom-0.5 right-0 text-[7px] text-white', {
+              'text-yellow-600': counter >= maxLength - 10 && counter < maxLength - 5,
+              'text-rose-600': counter >= maxLength - 5,
+            })}
+          >
+            {counter}/{maxLength}
+          </span>
+        )}
       </a.div>
     )
   },

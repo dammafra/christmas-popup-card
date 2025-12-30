@@ -1,7 +1,7 @@
 import { a, config, useTransition } from '@react-spring/web'
 import clsx from 'clsx'
 
-import { useDebug, useIsTouch } from '@hooks'
+import { useDebug, useIsTouch, useVisualViewport } from '@hooks'
 import { DirectionPhase, EditorPhase, useDirection, useEditor } from '@stores'
 import { generateShortURL } from '@utils'
 
@@ -10,6 +10,7 @@ import { Button } from './Button'
 export function UI() {
   const debug = useDebug()
   const isTouch = useIsTouch()
+  const { height: viewportHeight, offsetTop: viewportOffsetTop } = useVisualViewport()
 
   const phase = useDirection(s => s.phase)
   const setPhase = useDirection(s => s.setPhase)
@@ -43,10 +44,6 @@ export function UI() {
   const mainMenuTransition = useTransition(phase === DirectionPhase.END, transitionConfig)
   const innerMenuTransition = useTransition(editMode, transitionConfig)
   const editMenuTransition = useTransition(editorPhase >= EditorPhase.PREVIEW, transitionConfig)
-  const guideTransition = useTransition(
-    editMode && editorPhase < EditorPhase.PREVIEW,
-    transitionConfig,
-  )
 
   const share = async () => {
     const query = btoa(
@@ -89,7 +86,13 @@ export function UI() {
   }
 
   return (
-    <div className="fixed inset-0 pointer-events-none font-satisfy text-white text-lg select-none">
+    <div
+      className="fixed left-0 w-full pointer-events-none font-satisfy text-white text-lg select-none"
+      style={{
+        height: viewportHeight,
+        top: viewportOffsetTop,
+      }}
+    >
       {startActionTransition(
         (spring, show) =>
           show && (
@@ -189,22 +192,30 @@ export function UI() {
                 ),
               )}
 
-              {guideTransition(
-                (spring, editing) =>
-                  !editing && (
-                    <a.div
-                      className={clsx(
-                        'absolute max-md:top-0 md:bottom-0 right-0 text-right transition-[right]',
-                        editMode && 'md:right-28',
-                      )}
-                      style={spring}
-                    >
-                      <p>{isTouch ? 'Rotate with one finger' : 'Left click and drag to rotate'}</p>
-                      <p>{isTouch ? 'Move with two fingers' : 'Right click and drag to move'}</p>
-                      <p>{isTouch ? 'Pinch to zoom' : 'Scroll to zoom'}</p>
-                    </a.div>
-                  ),
-              )}
+              <div
+                className={clsx(
+                  'absolute max-md:top-0 md:-bottom-1 right-0 text-right transition-[right]',
+                  editMode && 'md:right-28',
+                )}
+              >
+                {editMode && editorPhase < EditorPhase.PREVIEW ? (
+                  <a.div style={spring}>
+                    <p className="tracking-tighter">Special characters may be replaced</p>
+                    <p className="tracking-tighter">Don' t share personal information</p>
+                  </a.div>
+                ) : (
+                  <a.div style={spring} className="flex flex-col">
+                    <p>{isTouch ? 'Rotate with one finger' : 'Left click and drag to rotate'}</p>
+                    <p>{isTouch ? 'Move with two fingers' : 'Right click and drag to move'}</p>
+                    <p>{isTouch ? 'Pinch to zoom' : 'Scroll to zoom'}</p>
+                    {editMode && (
+                      <p className="max-md:order-first max-md:mb-4 md:mt-14">
+                        Check the content and share it once it’s ready
+                      </p>
+                    )}
+                  </a.div>
+                )}
+              </div>
             </a.div>
           ),
       )}
