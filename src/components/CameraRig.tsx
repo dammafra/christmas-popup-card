@@ -82,6 +82,8 @@ export function CameraRig() {
       cameraControls.rotateAzimuthTo(MathUtils.degToRad(editMode ? 0 : -360), true).then(() => {
         if (animationId.current !== currentId) return
 
+        if (!editMode) setPhase(Phase.MESSAGE)
+
         cameraControls.smoothTime = 1
         cameraControls.normalizeRotations()
 
@@ -92,10 +94,7 @@ export function CameraRig() {
           cameraControls.dollyTo(viewport.aspect < 1 ? 5.5 : 4, true),
         ])
       }),
-    ]).then(() => {
-      if (editMode || animationId.current !== currentId) return
-      setPhase(Phase.MESSAGE)
-    })
+    ])
   }
 
   function defaults(currentId: number) {
