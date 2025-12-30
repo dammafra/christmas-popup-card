@@ -17,7 +17,7 @@ export const TextArea = animated(
       <a.div className="relative font-satisfy" style={style}>
         <textarea
           className={clsx(
-            'border-b border-white outline-none ring-0 bg-white/20 resize-none leading-4 py-2 caret-white overflow-hidden placeholder:text-sm placeholder:text-gray-50 placeholder:opacity-50',
+            'border-b border-white outline-none ring-0 bg-white/20 resize-none leading-4 py-2 caret-white overflow-hidden placeholder:text-sm placeholder:text-gray-50 placeholder:opacity-50 select-text',
             className,
           )}
           onFocus={e => {
