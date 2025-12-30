@@ -48,18 +48,17 @@ export function MessageEditor() {
           ),
       )}
 
-      {preview && (
-        <HandwrittenText
-          position={[3.4, -0.02, -2.25]}
-          rotation={[MathUtils.degToRad(90), 0, MathUtils.degToRad(180)]}
-          lineWidth={0.015}
-          scale={0.2}
-          maxWidth={10}
-          animate={false}
-        >
-          {value}
-        </HandwrittenText>
-      )}
+      <HandwrittenText
+        position={[3.4, -0.02, -2.25]}
+        rotation={[MathUtils.degToRad(90), 0, MathUtils.degToRad(180)]}
+        lineWidth={0.015}
+        scale={0.2}
+        maxWidth={10}
+        animate={false}
+        visible={preview}
+      >
+        {value}
+      </HandwrittenText>
     </>
   )
 }

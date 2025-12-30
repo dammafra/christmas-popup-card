@@ -41,18 +41,17 @@ export function DedicationEditor() {
             </Html>
           ),
       )}
-      {preview && (
-        <HandwrittenText
-          lineWidth={0.01}
-          scale={0.2}
-          maxWidth={6}
-          textAlign="center"
-          center
-          animate={false}
-        >
-          {value}
-        </HandwrittenText>
-      )}
+      <HandwrittenText
+        lineWidth={0.01}
+        scale={0.2}
+        maxWidth={6}
+        textAlign="center"
+        center
+        animate={false}
+        visible={preview}
+      >
+        {value}
+      </HandwrittenText>
     </group>
   )
 }
