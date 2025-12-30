@@ -36,10 +36,7 @@ export function UI() {
     phase >= Phase.OPENING && phase < Phase.END,
     transitionConfig,
   )
-  const mainMenuTransition = useTransition(phase === Phase.END, {
-    ...transitionConfig,
-    delay: 3500,
-  })
+  const mainMenuTransition = useTransition(phase === Phase.END, transitionConfig)
   const innerMenuTransition = useTransition(editMode, transitionConfig)
 
   const share = async () => {
