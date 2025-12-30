@@ -1,7 +1,9 @@
 import { a, config, useTransition } from '@react-spring/web'
+import clsx from 'clsx'
 
 import { useIsTouch } from '@hooks'
 import { Phase, useDirection, useEditor } from '@stores'
+
 import { Button } from './Button'
 
 export function UI() {
@@ -166,7 +168,10 @@ export function UI() {
                     <a.p className="absolute bottom-0" style={spring}>
                       Made with ♥︎ by{' '}
                       <a
-                        className="underline hover:bg-white/20 pointer-events-auto cursor-pointer"
+                        className={clsx(
+                          'underline hover:bg-white/20',
+                          !editMode && 'pointer-events-auto cursor-pointer',
+                        )}
                         target="_blank"
                         href="https://linktr.ee/dammafra"
                       >

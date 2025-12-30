@@ -31,8 +31,11 @@ export const TextArea = animated(
           maxLength={maxLength}
           {...props}
         />
-        <div className="absolute -bottom-1 text-[8px] text-white w-full flex justify-between">
-          <p className="tracking-tighter">Special characters may be replaced</p>
+        <div className="absolute -bottom-2.5 text-[7px] text-white w-full flex justify-between">
+          <div className="leading-2">
+            <p className="tracking-tighter">Special characters may be replaced</p>
+            <p className="tracking-tighter">Don' t enter personal data</p>
+          </div>
           {maxLength && (
             <span
               className={clsx({

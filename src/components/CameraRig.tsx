@@ -56,7 +56,7 @@ export function CameraRig() {
       cameraControls.moveTo(0, 0, 0, true),
       cameraControls.rotatePolarTo(0, true),
       cameraControls.rotateAzimuthTo(0, true),
-      cameraControls.dollyTo(viewport.aspect < 1 ? 4 : 2, true),
+      cameraControls.dollyTo(viewport.aspect < 1 ? 4.5 : 2, true),
     ])
   }
 
@@ -90,8 +90,8 @@ export function CameraRig() {
         return Promise.all([
           cameraControls.rotatePolarTo(0, true),
           cameraControls.rotateAzimuthTo(0, true),
-          cameraControls.moveTo(-2.1, 2.5, 0, true),
-          cameraControls.dollyTo(viewport.aspect < 1 ? 5.5 : 4, true),
+          cameraControls.moveTo(-2.5, 2.5, 0, true),
+          cameraControls.dollyTo(viewport.aspect < 1 ? 4 : 4, true),
         ])
       }),
     ])
