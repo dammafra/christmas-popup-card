@@ -3,6 +3,7 @@ import clsx from 'clsx'
 
 import { useIsTouch } from '@hooks'
 import { Phase, useDirection, useEditor } from '@stores'
+import { generateShortURL } from '@utils'
 
 import { Button } from './Button'
 
@@ -49,7 +50,7 @@ export function UI() {
       }),
     )
 
-    const url = `${location.protocol}//${location.host}?${query}`
+    const url = await generateShortURL(`${location.protocol}//${location.host}?${query}`)
     const toShare = { text: url }
 
     navigator.clipboard.writeText(url)
