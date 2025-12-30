@@ -1,4 +1,8 @@
+const cache = new Map<string, string>()
+
 export function generateShortURL(originalURL: string) {
+  if (cache.has(originalURL)) return cache.get(originalURL)
+
   const options = {
     method: 'POST',
     headers: {
@@ -16,7 +20,10 @@ export function generateShortURL(originalURL: string) {
 
   return fetch('https://api.short.io/links/public', options)
     .then(res => res.json())
-    .then(res => res.secureShortURL)
+    .then(res => {
+      cache.set(originalURL, res.secureShortURL)
+      return res.secureShortURL
+    })
     .catch(err => {
       console.error(err)
       return originalURL
