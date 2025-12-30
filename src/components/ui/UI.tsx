@@ -43,6 +43,10 @@ export function UI() {
   const mainMenuTransition = useTransition(phase === DirectionPhase.END, transitionConfig)
   const innerMenuTransition = useTransition(editMode, transitionConfig)
   const editMenuTransition = useTransition(editorPhase >= EditorPhase.PREVIEW, transitionConfig)
+  const guideTransition = useTransition(
+    editMode && editorPhase < EditorPhase.PREVIEW,
+    transitionConfig,
+  )
 
   const share = async () => {
     const query = btoa(
@@ -185,11 +189,14 @@ export function UI() {
                 ),
               )}
 
-              {innerMenuTransition(
+              {guideTransition(
                 (spring, editing) =>
                   !editing && (
                     <a.div
-                      className="absolute max-md:top-0 md:bottom-0 right-0 text-right"
+                      className={clsx(
+                        'absolute max-md:top-0 md:bottom-0 right-0 text-right transition-[right]',
+                        editMode && 'md:right-28',
+                      )}
                       style={spring}
                     >
                       <p>{isTouch ? 'Rotate with one finger' : 'Left click and drag to rotate'}</p>
