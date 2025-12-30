@@ -10,7 +10,7 @@ export const Button = animated(
     return (
       <a.button
         className={clsx(
-          'min-w-22 min-h-12 pointer-events-auto cursor-pointer hover:bg-white/20 active:bg-white/20 group transition-[background] relative text-center',
+          'min-w-24 min-h-12 px-2 pointer-events-auto cursor-pointer hover:bg-white/20 active:bg-white/20 group transition-[background] relative text-center',
           disabled && 'pointer-events-none opacity-50',
           className,
         )}

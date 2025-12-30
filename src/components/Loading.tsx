@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { MathUtils } from 'three'
 
 import { HandwrittenText } from '@components/helpers'
-import { Phase, useDirection } from '@stores'
+import { DirectionPhase, useDirection } from '@stores'
 
 export function Loading() {
   const phase = useDirection(s => s.phase)
@@ -11,7 +11,7 @@ export function Loading() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (phase === Phase.LOADING) setSpeed(2)
+      if (phase === DirectionPhase.LOADING) setSpeed(2)
     }, 1000)
 
     return () => clearTimeout(timeout)
@@ -26,7 +26,7 @@ export function Loading() {
 
   return transition(
     (spring, phase) =>
-      phase === Phase.LOADING && (
+      phase === DirectionPhase.LOADING && (
         <a.group position-y={spring.positionY}>
           <mesh scale={[3.66, 0.08, 5.14]}>
             <boxGeometry />

@@ -1,6 +1,7 @@
 const cache = new Map<string, string>()
 
-export function generateShortURL(originalURL: string) {
+export function generateShortURL(originalURL: string, debug?: boolean) {
+  if (debug) return originalURL
   if (cache.has(originalURL)) return cache.get(originalURL)
 
   const options = {

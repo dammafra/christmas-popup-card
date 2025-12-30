@@ -4,11 +4,11 @@ import { MathUtils } from 'three'
 
 import { HandwrittenText } from '@components/helpers'
 import { TextArea } from '@components/ui'
-import { useEditor } from '@stores'
+import { EditorPhase, useEditor } from '@stores'
 import { useState } from 'react'
 
 export function DedicationEditor() {
-  const focus = useEditor(s => s.focus === 'dedication')
+  const focus = useEditor(s => s.phase === EditorPhase.DEDICATION)
   const value = useEditor(s => s.dedication)
   const setValue = useEditor(s => s.setDedication)
 

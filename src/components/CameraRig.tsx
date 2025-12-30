@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react'
 import { Box3, MathUtils, Vector3 } from 'three'
 
 import { useDebug } from '@hooks'
-import { Phase, useDirection, useEditor } from '@stores'
+import { DirectionPhase, EditorPhase, useDirection, useEditor } from '@stores'
 
 export function CameraRig() {
   const debug = useDebug()
@@ -16,7 +16,7 @@ export function CameraRig() {
   const setOpen = useDirection(s => s.setOpen)
 
   const editMode = useEditor(s => s.enabled)
-  const editFocus = useEditor(s => s.focus)
+  const editorPhase = useEditor(s => s.phase)
 
   const timeoutRef = useRef<number>(null)
   const animationId = useRef(0)
@@ -83,7 +83,7 @@ export function CameraRig() {
       cameraControls.rotateAzimuthTo(MathUtils.degToRad(editMode ? 0 : -360), true).then(() => {
         if (animationId.current !== currentId) return
 
-        if (!editMode) setPhase(Phase.MESSAGE)
+        if (!editMode) setPhase(DirectionPhase.MESSAGE)
 
         cameraControls.smoothTime = 1
         cameraControls.normalizeRotations()
@@ -109,7 +109,7 @@ export function CameraRig() {
 
     return Promise.all([
       cameraControls.dollyTo(viewport.aspect < 1 ? 10 : 8, true),
-      cameraControls.moveTo(0, 1, 0, true),
+      cameraControls.moveTo(0, viewport.aspect < 1 ? 0.5 : 1, 0, true),
       cameraControls.rotatePolarTo(MathUtils.degToRad(60), true),
 
       cameraControls.rotateAzimuthTo(MathUtils.degToRad(20), true).then(() => {
@@ -126,14 +126,14 @@ export function CameraRig() {
     const currentId = animationId.current
 
     switch (phase) {
-      case Phase.LOADING:
-      case Phase.DEDICATION:
+      case DirectionPhase.LOADING:
+      case DirectionPhase.DEDICATION:
         dedicationFocus(currentId)
         break
-      case Phase.OPENING:
+      case DirectionPhase.OPENING:
         messageFocus(currentId)
         break
-      case Phase.END:
+      case DirectionPhase.END:
         defaults(currentId)
         break
     }
@@ -145,20 +145,20 @@ export function CameraRig() {
     cancelPendingLogic()
     const currentId = animationId.current
 
-    switch (editFocus) {
-      case 'dedication':
+    switch (editorPhase) {
+      case EditorPhase.DEDICATION:
         dedicationFocus(currentId)
         break
-      case 'message':
+      case EditorPhase.MESSAGE:
         messageFocus(currentId)
         break
 
-      case 'preview':
-      case 'share':
+      case EditorPhase.PREVIEW:
+      case EditorPhase.SHARE:
         defaults(currentId)
         break
     }
-  }, [editFocus, editMode, viewport, controls])
+  }, [editorPhase, editMode, viewport, controls])
 
   return <CameraControls makeDefault enabled={debug} maxPolarAngle={MathUtils.degToRad(90)} />
 }

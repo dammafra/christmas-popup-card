@@ -3,7 +3,7 @@ import { useFrame, useThree } from '@react-three/fiber'
 import { useCallback, useEffect, useRef, useState, type JSX } from 'react'
 import { AnimationClip, FrontSide, LoopOnce, Mesh, MeshStandardMaterial, Object3D } from 'three'
 
-import { Phase, useDirection, useEditor } from '@stores'
+import { DirectionPhase, useDirection, useEditor } from '@stores'
 
 import { Dedication } from './Dedication'
 import { DedicationEditor } from './DedicationEditor'
@@ -76,7 +76,7 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
   }, [glow])
 
   useEffect(() => {
-    setPhase(Phase.DEDICATION)
+    setPhase(DirectionPhase.DEDICATION)
   }, [setPhase])
 
   useEffect(() => {

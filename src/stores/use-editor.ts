@@ -16,14 +16,19 @@ function sanitize(string: string) {
     )
 }
 
-type EditorFocus = 'dedication' | 'message' | 'preview' | 'share'
+export enum EditorPhase {
+  DEDICATION = 1,
+  MESSAGE,
+  PREVIEW,
+  SHARE,
+}
 
 type EditorStore = {
   enabled: boolean
   setEnabled: (enabled: boolean) => void
 
-  focus: EditorFocus
-  setFocus: (focus: EditorFocus) => void
+  phase: EditorPhase
+  setPhase: (focus: EditorPhase) => void
 
   dedication: string
   setDedication: (dedication: string) => void
@@ -34,10 +39,10 @@ type EditorStore = {
 
 export const useEditor = create<EditorStore>()(set => ({
   enabled: false,
-  setEnabled: enabled => set(() => ({ enabled, focus: 'dedication' })),
+  setEnabled: enabled => set(() => ({ enabled, phase: EditorPhase.DEDICATION })),
 
-  focus: 'dedication',
-  setFocus: focus => set(() => ({ focus })),
+  phase: EditorPhase.DEDICATION,
+  setPhase: phase => set(() => ({ phase })),
 
   dedication: '',
   setDedication: dedication => set(() => ({ dedication: sanitize(dedication) })),

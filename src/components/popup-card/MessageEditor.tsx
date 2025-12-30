@@ -4,11 +4,11 @@ import { MathUtils } from 'three'
 
 import { HandwrittenText } from '@components/helpers'
 import { TextArea } from '@components/ui'
-import { useEditor } from '@stores'
+import { EditorPhase, useEditor } from '@stores'
 import { useState } from 'react'
 
 export function MessageEditor() {
-  const focus = useEditor(s => s.focus === 'message')
+  const focus = useEditor(s => s.phase === EditorPhase.MESSAGE)
   const value = useEditor(s => s.message)
   const setValue = useEditor(s => s.setMessage)
 

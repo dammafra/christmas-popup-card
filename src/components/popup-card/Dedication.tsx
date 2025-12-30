@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { MathUtils } from 'three'
 
 import { HandwrittenText } from '@components/helpers'
-import { Phase, useDirection } from '@stores'
+import { DirectionPhase, useDirection } from '@stores'
 import { randomOneOf, safeDecode } from '@utils'
 
 const DEDICATIONS = [
@@ -27,13 +27,13 @@ export function Dedication() {
   )
 
   useEffect(() => {
-    if (phase === Phase.LOADING) return
+    if (phase === DirectionPhase.LOADING) return
 
     const timeout = setTimeout(() => setShowDedication(true), 500)
     return () => clearTimeout(timeout)
   }, [phase, setShowDedication])
 
-  if (phase === Phase.LOADING) return
+  if (phase === DirectionPhase.LOADING) return
 
   return (
     showDedication && (
@@ -45,7 +45,7 @@ export function Dedication() {
         maxWidth={6}
         textAlign="center"
         center
-        speed={phase > Phase.DEDICATION ? 20 : 3}
+        speed={phase > DirectionPhase.DEDICATION ? 20 : 3}
       >
         {dedication}
       </HandwrittenText>

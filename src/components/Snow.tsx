@@ -3,7 +3,7 @@ import { useFrame } from '@react-three/fiber'
 import { useMemo, useRef, useState } from 'react'
 import { DoubleSide, InstancedMesh, MathUtils, Object3D } from 'three'
 
-import { Phase, useDirection } from '@stores'
+import { DirectionPhase, useDirection } from '@stores'
 
 type Particle = {
   x: number
@@ -97,7 +97,7 @@ export function Snow({ count = 300 }: SnowProps) {
   })
 
   return (
-    phase >= Phase.OPENING && (
+    phase >= DirectionPhase.OPENING && (
       <instancedMesh ref={mesh} args={[undefined, undefined, count]} frustumCulled={false}>
         <planeGeometry args={[0.1, 0.1]} />
         <meshBasicMaterial

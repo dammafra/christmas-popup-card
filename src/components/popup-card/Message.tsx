@@ -1,7 +1,7 @@
 import { MathUtils } from 'three'
 
 import { HandwrittenText } from '@components/helpers'
-import { Phase, useDirection } from '@stores'
+import { DirectionPhase, useDirection } from '@stores'
 import { randomOneOf, safeDecode } from '@utils'
 import { useMemo } from 'react'
 
@@ -36,15 +36,15 @@ export function Message() {
   )
 
   return (
-    phase >= Phase.MESSAGE && (
+    phase >= DirectionPhase.MESSAGE && (
       <HandwrittenText
         position={[3.4, -0.02, -2.25]}
         lineWidth={0.015}
         scale={0.2}
         maxWidth={10}
-        speed={phase > Phase.MESSAGE ? 20 : 5}
+        speed={phase > DirectionPhase.MESSAGE ? 20 : 5}
         rotation={[MathUtils.degToRad(90), 0, MathUtils.degToRad(180)]}
-        onResolve={() => setTimeout(() => setPhase(Phase.END), 1000)}
+        onResolve={() => setTimeout(() => setPhase(DirectionPhase.END), 1000)}
       >
         {message}
       </HandwrittenText>

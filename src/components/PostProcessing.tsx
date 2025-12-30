@@ -3,7 +3,7 @@ import { Bloom, DepthOfField, EffectComposer, ToneMapping } from '@react-three/p
 import { ToneMappingMode, VignetteEffect } from 'postprocessing'
 import { useMemo } from 'react'
 
-import { Phase, useDirection } from '@stores'
+import { DirectionPhase, useDirection } from '@stores'
 
 export function PostProcessing() {
   const phase = useDirection(s => s.phase)
@@ -22,7 +22,7 @@ export function PostProcessing() {
 
   useSpring({
     from: { darkness: darknessFrom },
-    to: { darkness: phase !== Phase.LOADING ? darknessTo : darknessFrom },
+    to: { darkness: phase !== DirectionPhase.LOADING ? darknessTo : darknessFrom },
     config: config.molasses,
     onChange: v => {
       // eslint-disable-next-line
@@ -33,7 +33,7 @@ export function PostProcessing() {
   return (
     <EffectComposer resolutionScale={0.5} multisampling={0}>
       <Bloom intensity={1} luminanceThreshold={2} luminanceSmoothing={0.2} />
-      <DepthOfField focusDistance={0.32} focalLength={0.018} bokehScale={0.8} />
+      <DepthOfField focusDistance={0.32} focalLength={0.018} bokehScale={1} />
       <primitive object={vignetteEffect} dispose={null} />
       <ToneMapping mode={ToneMappingMode.UNCHARTED2} />
     </EffectComposer>

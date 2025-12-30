@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export enum Phase {
+export enum DirectionPhase {
   LOADING = 1,
   DEDICATION,
   OPENING,
@@ -9,15 +9,15 @@ export enum Phase {
 }
 
 type DirectionStore = {
-  phase: Phase
-  setPhase: (phase: Phase) => void
+  phase: DirectionPhase
+  setPhase: (phase: DirectionPhase) => void
 
   open: boolean
   setOpen: (open: boolean) => void
 }
 
 export const useDirection = create<DirectionStore>()(set => ({
-  phase: Phase.LOADING,
+  phase: DirectionPhase.LOADING,
   setPhase: phase => set(() => ({ phase })),
 
   open: false,
