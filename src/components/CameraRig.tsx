@@ -107,7 +107,7 @@ export function CameraRig() {
     cameraControls.normalizeRotations()
 
     return Promise.all([
-      cameraControls.dollyTo(8, true),
+      cameraControls.dollyTo(viewport.aspect < 1 ? 10 : 8, true),
       cameraControls.moveTo(0, 1, 0, true),
       cameraControls.rotatePolarTo(MathUtils.degToRad(60), true),
 

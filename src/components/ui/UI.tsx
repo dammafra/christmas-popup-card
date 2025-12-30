@@ -66,7 +66,7 @@ export function UI() {
         (spring, show) =>
           show && (
             <Button
-              className="absolute! bottom-4 left-1/2 -translate-x-1/2 px-6 py-2 text-2xl w-26"
+              className="absolute! bottom-4 left-1/2 -translate-x-1/2 text-2xl w-26"
               style={spring}
               onClick={() => setPhase(Phase.OPENING)}
             >
@@ -79,7 +79,7 @@ export function UI() {
         (spring, show) =>
           show && (
             <Button
-              className="absolute! bottom-4 left-1/2 -translate-x-1/2 px-6 py-2 text-2xl w-26"
+              className="absolute! bottom-4 left-1/2 -translate-x-1/2 text-2xl w-26"
               style={spring}
               onClick={() => setPhase(Phase.END)}
             >
@@ -101,7 +101,6 @@ export function UI() {
                     >
                       {editFocus === 'dedication' && (
                         <Button
-                          className="px-6 py-2"
                           onClick={() => setFocus('message')}
                           disabled={!editMode || !dedication}
                         >
@@ -110,7 +109,6 @@ export function UI() {
                       )}
                       {editFocus === 'message' && (
                         <Button
-                          className="px-6 py-2"
                           onClick={() => setFocus('preview')}
                           disabled={!editMode || !message}
                         >
@@ -126,7 +124,6 @@ export function UI() {
                             Edit
                           </Button>
                           <Button
-                            className="px-6 py-2"
                             onClick={() => {
                               setFocus('share')
                               share()
@@ -143,22 +140,24 @@ export function UI() {
 
               {innerMenuTransition((spring, editing) =>
                 editing ? (
-                  <a.div className="absolute right-0 flex flex-col gap-2 w-fit" style={spring}>
+                  <a.div className="absolute right-0 flex flex-col gap-2" style={spring}>
                     <Button onClick={() => setEditMode(false)} disabled={!editMode}>
                       Back
                     </Button>
                   </a.div>
                 ) : (
-                  <a.div className="absolute right-0 flex flex-col gap-2 w-fit" style={spring}>
-                    <Button className="w-60" onClick={() => setEditMode(true)} disabled={editMode}>
+                  <a.div className="absolute right-0 flex flex-col gap-2" style={spring}>
+                    <Button className="w-56" onClick={() => setEditMode(true)} disabled={editMode}>
                       Share your greetings
                     </Button>
-                    <Button className="w-60" onClick={() => setOpen(!open)} disabled={editMode}>
+                    <Button className="w-56" onClick={() => setOpen(!open)} disabled={editMode}>
                       {open ? 'Fold' : 'Unfold'} the greeting card
                     </Button>
-                    <p>{isTouch ? 'Rotate with one finger' : 'Left click and drag to rotate'}</p>
-                    <p>{isTouch ? 'Move with two fingers' : 'Right click and drag to move'}</p>
-                    <p>{isTouch ? 'Pinch to zoom' : 'Scroll to zoom'}</p>
+                    <div className="text-lg">
+                      <p>{isTouch ? 'Rotate with one finger' : 'Left click and drag to rotate'}</p>
+                      <p>{isTouch ? 'Move with two fingers' : 'Right click and drag to move'}</p>
+                      <p>{isTouch ? 'Pinch to zoom' : 'Scroll to zoom'}</p>
+                    </div>
                   </a.div>
                 ),
               )}
