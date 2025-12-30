@@ -16,7 +16,7 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
   const openTrigger = useDirection(s => s.open)
   const editMode = useEditor(s => s.enabled)
 
-  const { gl } = useThree()
+  const gl = useThree(s => s.gl)
   const { scene, animations } = useGLTF('/models/popup-card-compressed.glb')
   const { actions } = useAnimations<AnimationClip>(animations, scene)
 

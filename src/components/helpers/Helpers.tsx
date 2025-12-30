@@ -4,7 +4,11 @@ import { Perf } from 'r3f-perf'
 
 import { useDebug } from '@hooks'
 
-export function Helpers() {
+interface HelpersProps {
+  gizmoRenderPriority?: number
+}
+
+export function Helpers({ gizmoRenderPriority }: HelpersProps) {
   const debug = useDebug()
 
   const { grid, axes, gizmo } = useControls(
@@ -23,7 +27,7 @@ export function Helpers() {
       {grid && <gridHelper args={[10, 10, 'red', 'gray']} position-y={-0.002} />}
 
       {gizmo && (
-        <GizmoHelper renderPriority={999}>
+        <GizmoHelper renderPriority={gizmoRenderPriority}>
           <GizmoViewport labelColor="white" />
         </GizmoHelper>
       )}

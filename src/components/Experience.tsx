@@ -1,5 +1,6 @@
+import { useDetectGPU } from '@react-three/drei'
 import { Suspense } from 'react'
-import { NoToneMapping, PCFShadowMap } from 'three'
+import { NoToneMapping, PCFShadowMap, ReinhardToneMapping } from 'three'
 
 import { Canvas, Helpers } from '@components/helpers'
 import { PopupCard } from '@components/popup-card'
@@ -11,11 +12,13 @@ import { Loading } from './Loading'
 import { PostProcessing } from './PostProcessing'
 
 export function Experience() {
+  const { tier } = useDetectGPU()
+
   return (
     <>
       <Canvas
         shadows={{ type: PCFShadowMap }}
-        gl={{ toneMapping: NoToneMapping }}
+        gl={{ toneMapping: tier >= 2 ? NoToneMapping : ReinhardToneMapping }}
         camera={{
           fov: 45,
           near: 0.1,
@@ -31,8 +34,8 @@ export function Experience() {
           <PopupCard />
         </Suspense>
 
-        <Helpers />
-        <PostProcessing />
+        <Helpers gizmoRenderPriority={tier >= 2 ? 3 : 1} />
+        {tier >= 2 && <PostProcessing />}
       </Canvas>
       <UI />
     </>

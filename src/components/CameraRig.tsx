@@ -8,7 +8,8 @@ import { Phase, useDirection, useEditor } from '@stores'
 
 export function CameraRig() {
   const debug = useDebug()
-  const { controls, viewport } = useThree()
+  const controls = useThree(s => s.controls)
+  const viewport = useThree(s => s.viewport)
 
   const phase = useDirection(s => s.phase)
   const setPhase = useDirection(s => s.setPhase)
