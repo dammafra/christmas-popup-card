@@ -12,5 +12,5 @@
 html,
 body,
 #root {
-  @apply fixed inset-0 overflow-hidden bg-black;
+  @apply fixed inset-0 overflow-hidden bg-black touch-pan-y overscroll-none;
 }
