@@ -1,5 +1,5 @@
 import { useAnimations, useGLTF } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
+import { useFrame, useThree } from '@react-three/fiber'
 import { useCallback, useEffect, useRef, useState, type JSX } from 'react'
 import { AnimationClip, FrontSide, LoopOnce, Mesh, MeshStandardMaterial, Object3D } from 'three'
 
@@ -18,6 +18,7 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
 
   const editMode = useEditor(s => s.enabled)
 
+  const { gl } = useThree()
   const { scene, animations } = useGLTF('/models/popup-card-compressed.glb')
   const { actions } = useAnimations<AnimationClip>(animations, scene)
 
@@ -94,7 +95,10 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
         obj.receiveShadow = true
         obj.material.side = FrontSide
 
-        console.log(obj.material.side)
+        const maxAnisotropy = gl.capabilities.getMaxAnisotropy()
+        obj.material.map.anisotropy = maxAnisotropy
+        obj.material.map.needsUpdate = true
+
         if (obj.name === 'coverFront') obj.add(coverRef.current)
       }
     })
