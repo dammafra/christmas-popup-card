@@ -162,7 +162,7 @@ export function UI() {
                     disabled={!editMode}
                     style={spring}
                   >
-                    Back
+                    Cancel
                   </Button>
                 ) : (
                   <a.div className="absolute bottom-0 flex flex-col gap-2" style={spring}>
