@@ -34,7 +34,7 @@ export const TextArea = animated(
         <div className="absolute -bottom-2.5 text-[7px] text-white w-full flex justify-between">
           <div className="leading-2">
             <p className="tracking-tighter">Special characters may be replaced</p>
-            <p className="tracking-tighter">Don' t enter personal data</p>
+            <p className="tracking-tighter">Don' t share personal information</p>
           </div>
           {maxLength && (
             <span
