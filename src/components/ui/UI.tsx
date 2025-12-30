@@ -85,7 +85,7 @@ export function UI() {
   }
 
   return (
-    <div className="fixed inset-0 pointer-events-none font-satisfy text-white text-lg z-99999999">
+    <div className="fixed inset-0 pointer-events-none font-satisfy text-white text-lg">
       {startActionTransition(
         (spring, show) =>
           show && (

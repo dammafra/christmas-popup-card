@@ -23,11 +23,17 @@ export function DedicationEditor() {
   })
 
   return (
-    <group position={[1.83, 0.02, 0]} rotation-x={MathUtils.degToRad(-90)}>
+    <>
       {transition(
         (spring, focus) =>
           focus && (
-            <Html scale={0.125} transform className="scale-400">
+            <Html
+              transform
+              scale={0.125}
+              position={[1.83, 0.02, 0]}
+              rotation-x={MathUtils.degToRad(-90)}
+              className="scale-400"
+            >
               <TextArea
                 placeholder="Enter your dedication"
                 maxLength={40}
@@ -42,6 +48,8 @@ export function DedicationEditor() {
           ),
       )}
       <HandwrittenText
+        position={[1.83, 0.02, 0]}
+        rotation-x={MathUtils.degToRad(-90)}
         lineWidth={0.01}
         scale={0.2}
         maxWidth={6}
@@ -52,6 +60,6 @@ export function DedicationEditor() {
       >
         {value}
       </HandwrittenText>
-    </group>
+    </>
   )
 }

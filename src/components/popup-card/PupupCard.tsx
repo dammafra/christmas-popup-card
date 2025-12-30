@@ -124,17 +124,8 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
       <primitive object={scene} {...props} dispose={null} />
 
       <group ref={coverRef}>
-        {editMode ? (
-          <>
-            <DedicationEditor />
-            <MessageEditor />
-          </>
-        ) : (
-          <>
-            <Dedication />
-            <Message />
-          </>
-        )}
+        {editMode ? <DedicationEditor /> : <Dedication />}
+        {editMode ? <MessageEditor /> : <Message />}
       </group>
 
       <Glow show={glow} />
