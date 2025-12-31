@@ -11,7 +11,7 @@ export function Loading() {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      if (phase === DirectionPhase.LOADING) setSpeed(2)
+      if (phase === DirectionPhase.LOADING) setSpeed(20)
     }, 1000)
 
     return () => clearTimeout(timeout)
