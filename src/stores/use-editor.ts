@@ -44,7 +44,14 @@ type EditorStore = {
 
 export const useEditor = create<EditorStore>()(set => ({
   enabled: false,
-  setEnabled: enabled => set(() => ({ enabled, phase: EditorPhase.DEDICATION })),
+  setEnabled: enabled => {
+    set(() => ({
+      enabled,
+      phase: EditorPhase.DEDICATION,
+      dedication: '',
+      message: '',
+    }))
+  },
 
   phase: EditorPhase.DEDICATION,
   setPhase: phase => set(() => ({ phase })),
