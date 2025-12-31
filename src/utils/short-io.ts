@@ -1,6 +1,15 @@
 const cache = new Map<string, string>()
 
-export function generateShortURL(originalURL: string, debug?: boolean) {
+export function generateURL(dedication: string, message: string, debug?: boolean) {
+  const query = btoa(
+    JSON.stringify({
+      dedication: encodeURIComponent(dedication),
+      message: encodeURIComponent(message),
+    }),
+  )
+
+  const originalURL = `${location.protocol}//${location.host}?${query}`
+
   if (debug) return originalURL
   if (cache.has(originalURL)) return cache.get(originalURL)
 
@@ -15,6 +24,7 @@ export function generateShortURL(originalURL: string, debug?: boolean) {
       skipQS: false,
       archived: false,
       originalURL,
+      title: dedication,
       domain: 'dammafra.short.gy',
     }),
   }

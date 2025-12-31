@@ -3,7 +3,7 @@ import clsx from 'clsx'
 
 import { useDebug, useIsTouch, useVisualViewport } from '@hooks'
 import { DirectionPhase, EditorPhase, useDirection, useEditor } from '@stores'
-import { generateShortURL } from '@utils'
+import { generateURL } from '@utils'
 
 import { Button } from './Button'
 
@@ -46,14 +46,7 @@ export function UI() {
   const editMenuTransition = useTransition(editorPhase >= EditorPhase.PREVIEW, transitionConfig)
 
   const share = async () => {
-    const query = btoa(
-      JSON.stringify({
-        dedication: encodeURIComponent(dedication),
-        message: encodeURIComponent(message),
-      }),
-    )
-
-    const url = await generateShortURL(`${location.protocol}//${location.host}?${query}`, debug)
+    const url = await generateURL(dedication, message, debug)
     const toShare = { text: url }
 
     navigator.clipboard.writeText(url)
