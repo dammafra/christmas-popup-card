@@ -55,7 +55,7 @@ export function CameraRig() {
 
     return Promise.all([
       cameraControls.moveTo(0, 0, 0, true),
-      cameraControls.rotatePolarTo(0, true),
+      cameraControls.rotatePolarTo(MathUtils.degToRad(1), true),
       cameraControls.rotateAzimuthTo(0, true),
       cameraControls.dollyTo(viewport.aspect < 1 ? 4.5 : 2, true),
     ])
@@ -78,7 +78,7 @@ export function CameraRig() {
     return Promise.all([
       cameraControls.dollyTo(8, true),
       cameraControls.moveTo(0, 1, 0, true),
-      cameraControls.rotatePolarTo(MathUtils.degToRad(editMode ? 0 : 60), true),
+      cameraControls.rotatePolarTo(MathUtils.degToRad(editMode ? 1 : 60), true),
 
       cameraControls.rotateAzimuthTo(MathUtils.degToRad(editMode ? 0 : -360), true).then(() => {
         if (animationId.current !== currentId) return
@@ -89,7 +89,7 @@ export function CameraRig() {
         cameraControls.normalizeRotations()
 
         return Promise.all([
-          cameraControls.rotatePolarTo(0, true),
+          cameraControls.rotatePolarTo(MathUtils.degToRad(1), true),
           cameraControls.rotateAzimuthTo(0, true),
           cameraControls.moveTo(-2.5, 2.5, 0, true),
           cameraControls.dollyTo(viewport.aspect < 1 ? 4 : 4, true),
