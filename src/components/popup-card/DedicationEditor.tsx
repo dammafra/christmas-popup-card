@@ -33,6 +33,7 @@ export function DedicationEditor() {
               position={[1.83, 0.02, 0]}
               rotation-x={MathUtils.degToRad(-90)}
               className="scale-400"
+              zIndexRange={[10, 0]}
             >
               <TextArea
                 placeholder="Enter your dedication"

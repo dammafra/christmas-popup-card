@@ -70,7 +70,7 @@ export function UI() {
       disabled: !editMode || !dedication,
     },
     [EditorPhase.MESSAGE]: {
-      label: 'Preview',
+      label: 'Next',
       action: () => setEditorPhase(EditorPhase.PREVIEW),
       disabled: !editMode || !message,
     },
@@ -87,7 +87,7 @@ export function UI() {
 
   return (
     <div
-      className="fixed left-0 w-full pointer-events-none font-satisfy text-white text-lg select-none"
+      className="fixed left-0 w-full pointer-events-none font-satisfy text-white text-lg select-none z-20"
       style={{
         height: viewportHeight,
         top: viewportOffsetTop,
@@ -209,8 +209,8 @@ export function UI() {
                     <p>{isTouch ? 'Move with two fingers' : 'Right click and drag to move'}</p>
                     <p>{isTouch ? 'Pinch to zoom' : 'Scroll to zoom'}</p>
                     {editMode && (
-                      <p className="max-md:order-first max-md:mb-4 md:mt-14">
-                        Check the content and share it once it’s ready
+                      <p className="max-md:order-first mb-4 md:mt-8">
+                        Review the content and share it once it’s ready
                       </p>
                     )}
                   </a.div>

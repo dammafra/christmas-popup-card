@@ -33,6 +33,7 @@ export function MessageEditor() {
               position={[2.45, -0.02, -0.1]}
               rotation={[MathUtils.degToRad(90), 0, MathUtils.degToRad(180)]}
               className="scale-400"
+              zIndexRange={[10, 0]}
             >
               <TextArea
                 placeholder="Enter your message"
