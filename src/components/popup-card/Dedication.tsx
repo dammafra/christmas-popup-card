@@ -20,7 +20,7 @@ export function Dedication() {
     () =>
       decodeURIComponent(
         safeDecode(location.search.substring(1), {
-          dedication: randomOneOf(DEDICATIONS),
+          dedication: import.meta.env.VITE_DEDICATION || randomOneOf(DEDICATIONS),
         }).dedication,
       ),
     [],

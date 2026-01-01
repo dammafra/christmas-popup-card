@@ -26,7 +26,9 @@ export function Message() {
     () =>
       decodeURIComponent(
         safeDecode(location.search.substring(1), {
-          message: randomOneOf(MESSAGES).concat(`
+          message:
+            import.meta.env.VITE_MESSAGE ||
+            randomOneOf(MESSAGES).concat(`
 
       From dammafra.
     `),
