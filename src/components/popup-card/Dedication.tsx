@@ -27,6 +27,10 @@ export function Dedication() {
   )
 
   useEffect(() => {
+    document.title = dedication
+  }, [dedication])
+
+  useEffect(() => {
     if (phase === DirectionPhase.LOADING) return
 
     const timeout = setTimeout(() => setShowDedication(true), 500)

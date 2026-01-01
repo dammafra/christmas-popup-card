@@ -175,11 +175,11 @@ export function UI() {
                         dammafra
                       </a>
                     </p>
-                    <Button onClick={() => setEditMode(true)} disabled={editMode}>
-                      Share your greetings
-                    </Button>
                     <Button onClick={() => setOpen(!open)} disabled={editMode}>
                       {open ? 'Fold' : 'Unfold'} the greeting card
+                    </Button>
+                    <Button onClick={() => setEditMode(true)} disabled={editMode}>
+                      Share your wishes
                     </Button>
                   </a.div>
                 ),
@@ -194,7 +194,7 @@ export function UI() {
                 {editMode && editorPhase < EditorPhase.PREVIEW ? (
                   <a.div style={spring}>
                     <p className="tracking-tighter">Special characters may be replaced</p>
-                    <p className="tracking-tighter">Don' t share personal information</p>
+                    <p className="tracking-tighter">Do not share personal information</p>
                   </a.div>
                 ) : (
                   <a.div style={spring} className="flex flex-col">
@@ -203,7 +203,7 @@ export function UI() {
                     <p>{isTouch ? 'Pinch to zoom' : 'Scroll to zoom'}</p>
                     {editMode && (
                       <p className="max-md:order-first mb-4 md:mt-8">
-                        Review the content and share it once it’s ready
+                        Review the content and share once ready
                       </p>
                     )}
                   </a.div>

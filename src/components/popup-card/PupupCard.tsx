@@ -1,3 +1,4 @@
+import { useSpring } from '@react-spring/three'
 import { useAnimations, useGLTF } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useCallback, useEffect, useRef, useState, type JSX } from 'react'
@@ -26,6 +27,7 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
   const bounceTimeout = useRef<number | undefined>(undefined)
 
   const coverRef = useRef<Object3D>(null!)
+  const emissiveMaterialsRef = useRef<MeshStandardMaterial[]>([])
   const [glow, setGlow] = useState(false)
 
   const scheduleBounce = useCallback((startOffset = 0) => {
@@ -96,6 +98,13 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
         obj.material.map.needsUpdate = true
 
         if (obj.name === 'coverFront') obj.add(coverRef.current)
+
+        if (obj.name.includes('tree')) {
+          const material = obj.material as MeshStandardMaterial
+          material.toneMapped = false
+          material.emissive.set('gold')
+          emissiveMaterialsRef.current.push(material)
+        }
       }
     })
 
@@ -108,15 +117,17 @@ export function PopupCard(props: JSX.IntrinsicElements['group']) {
     return () => clearTimeout(bounceTimeout.current)
   }, [scene])
 
-  useFrame(({ clock }) => {
-    scene.traverse(obj => {
-      if (obj instanceof Mesh && obj.name.includes('tree')) {
-        const material = obj.material as MeshStandardMaterial
-        material.toneMapped = false
-        material.emissive.set('gold')
-        material.emissiveIntensity = 2.5 + 2.5 * Math.sin(clock.elapsedTime * 2)
-      }
-    })
+  const { emissiveIntensity } = useSpring({
+    from: { emissiveIntensity: 0 },
+    to: { emissiveIntensity: glow ? 5 : 0 },
+    config: { duration: glow ? 2000 : 500 }, // speed of blink
+    loop: { reverse: true },
+  })
+
+  useFrame(() => {
+    for (const material of emissiveMaterialsRef.current) {
+      material.emissiveIntensity = emissiveIntensity.get()
+    }
   })
 
   return (
