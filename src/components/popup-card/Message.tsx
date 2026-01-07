@@ -46,7 +46,7 @@ export function Message() {
         maxWidth={10}
         speed={phase > DirectionPhase.MESSAGE ? 20 : 5}
         rotation={[MathUtils.degToRad(90), 0, MathUtils.degToRad(180)]}
-        onResolve={() => setTimeout(() => setPhase(DirectionPhase.END), 1000)}
+        onResolve={() => setTimeout(() => setPhase(DirectionPhase.END), 3000)}
       >
         {message}
       </HandwrittenText>
