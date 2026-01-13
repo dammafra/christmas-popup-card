@@ -181,6 +181,13 @@ export function UI() {
                     <Button onClick={() => setEditMode(true)} disabled={editMode}>
                       Share your wishes
                     </Button>
+                    <Button
+                      href="https://www.buymeacoffee.com/dammafra"
+                      target="_blank"
+                      className="flex items-center justify-center"
+                    >
+                      <img src="./bmc.png" alt="Buy Me A Coffee" className="h-8" />
+                    </Button>
                   </a.div>
                 ),
               )}
