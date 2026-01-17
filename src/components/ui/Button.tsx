@@ -17,7 +17,7 @@ export const Button = animated(
     return (
       <TagName
         className={clsx(
-          'min-w-24 min-h-12 px-2 pointer-events-auto cursor-pointer hover:bg-white/20 active:bg-white/20 group transition-[background] relative text-center',
+          'flex items-center justify-center gap-2 min-w-24 min-h-12 px-2 pointer-events-auto cursor-pointer hover:bg-white/20 active:bg-white/20 group transition-[background] relative text-center',
           disabled && 'pointer-events-none opacity-50',
           className,
         )}
