@@ -8,9 +8,11 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "postinstall": "patch-package"
   },
   "dependencies": {
+    "@pmndrs/detect-gpu": "^6.0.3",
     "@react-spring/three": "^10.0.3",
     "@react-spring/web": "^10.0.3",
     "@react-three/drei": "^10.7.7",
@@ -21,6 +23,7 @@
     "@types/three": "^0.182.0",
     "clsx": "^2.1.1",
     "leva": "^0.10.1",
+    "patch-package": "^8.0.1",
     "r3f-perf": "^7.2.3",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
